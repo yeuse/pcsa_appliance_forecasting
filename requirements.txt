@@ -1,0 +1,5 @@
+# CPU-tested versions; choose the matching CUDA torch build separately if needed.
+torch==2.2.2
+numpy==1.26.4
+pandas==2.2.3
+PyYAML>=6.0,<7
