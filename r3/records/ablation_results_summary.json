@@ -1,0 +1,20 @@
+[
+  {
+    "arm": "full_reference",
+    "n_seeds": 3,
+    "mean_mae_kw": 0.07191598167022069,
+    "sample_sd_kw": 0.0032952298225295204
+  },
+  {
+    "arm": "no_future_state_gate",
+    "n_seeds": 3,
+    "mean_mae_kw": 0.0712318221728007,
+    "sample_sd_kw": 0.0010713515187327311
+  },
+  {
+    "arm": "no_residual",
+    "n_seeds": 3,
+    "mean_mae_kw": 0.07454779992500941,
+    "sample_sd_kw": 0.0022250767297619964
+  }
+]

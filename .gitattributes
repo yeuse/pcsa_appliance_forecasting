@@ -1,0 +1,3 @@
+
+# Preserve exact frozen source and record hashes across platforms.
+r3/** -text

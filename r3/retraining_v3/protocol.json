@@ -1,0 +1,78 @@
+{
+  "protocol_id": "pcsa-r3-20261013-v1",
+  "seeds": [
+    7,
+    42,
+    123
+  ],
+  "source_home": 7951,
+  "target_homes": [
+    3039,
+    8386,
+    8565
+  ],
+  "data_dir": "data/austin_2018_sep_4homes",
+  "appliances": [
+    "air1",
+    "refrigerator1",
+    "dishwasher1",
+    "microwave1"
+  ],
+  "thresholds": [
+    0.5,
+    0.05,
+    0.05,
+    0.1
+  ],
+  "caps": [
+    3.0,
+    0.5,
+    2.0,
+    2.5
+  ],
+  "input_window": 120,
+  "horizon": 30,
+  "window_rule": "history_only",
+  "grid_semantics": "net_grid_import_export; negative readings excluded in archived extract",
+  "power_cap_mode": "smooth",
+  "state_gate_floor": 0.01,
+  "residual_gate_logit": 0.0,
+  "active_power_weight": 1.5,
+  "on_weight_actual": 2.5,
+  "lambda_amp_on": 0.05,
+  "lambda_state": 0.1,
+  "lambda_ghost": 0.05,
+  "lambda_agg": 0.0,
+  "lambda_history_power": 0.2,
+  "lambda_history_state": 0.1,
+  "source_epochs": {
+    "pcsa_base": 160,
+    "pcsa_residual": 160,
+    "nilm": 160,
+    "two_stage_forecast": 160,
+    "aggregate": 320
+  },
+  "source_batch_size": 512,
+  "transfer_batch_size": 256,
+  "transfer_epochs": 200,
+  "patience": 30,
+  "min_epochs": 20,
+  "lr": 0.0001,
+  "transfer_lr": 3e-05,
+  "weight_decay": 0.0001,
+  "grad_clip": 1.0,
+  "support_fractions": [
+    0.01,
+    0.05,
+    0.1
+  ],
+  "cap_quantile": 0.995,
+  "cap_margin": 0.05,
+  "cap_source_lower_bound": true,
+  "selection": "minimum validation Macro MAE, initial candidate included; no test selection",
+  "early_stop_min_delta": 0.0,
+  "drop_last": false,
+  "precision": "float32",
+  "optimizer": "AdamW",
+  "scheduler": "none"
+}

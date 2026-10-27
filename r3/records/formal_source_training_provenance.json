@@ -1,0 +1,2816 @@
+{
+  "7/pcsa": {
+    "path": "/home/dell/work_ywj/pisa_framework_v1/outputs/history_sequential_v1/seed_7/history_sequential/residual/best.pt",
+    "sha256": "aa11c66dbc6907f2b30872b2454645ae88efdcf7d9aea04a606295ebb570cb65",
+    "selected_epoch": 80,
+    "original_training_protocol": {
+      "protocol_id": "pcsa-r3-20261013-v1",
+      "seeds": [
+        7,
+        42,
+        123
+      ],
+      "source_home": 7951,
+      "target_homes": [
+        3039,
+        8386,
+        8565
+      ],
+      "data_dir": "data/austin_2018_sep_4homes",
+      "appliances": [
+        "air1",
+        "refrigerator1",
+        "dishwasher1",
+        "microwave1"
+      ],
+      "thresholds": [
+        0.5,
+        0.05,
+        0.05,
+        0.1
+      ],
+      "caps": [
+        3.0,
+        0.5,
+        2.0,
+        2.5
+      ],
+      "input_window": 120,
+      "horizon": 30,
+      "window_rule": "history_only",
+      "grid_semantics": "net_grid_import_export; negative readings excluded in archived extract",
+      "power_cap_mode": "smooth",
+      "state_gate_floor": 0.01,
+      "residual_gate_logit": 0.0,
+      "active_power_weight": 1.5,
+      "on_weight_actual": 2.5,
+      "lambda_amp_on": 0.05,
+      "lambda_state": 0.1,
+      "lambda_ghost": 0.05,
+      "lambda_agg": 0.0,
+      "lambda_history_power": 0.2,
+      "lambda_history_state": 0.1,
+      "source_epochs": {
+        "pcsa_base": 160,
+        "pcsa_residual": 160,
+        "nilm": 160,
+        "two_stage_forecast": 160,
+        "aggregate": 320
+      },
+      "source_batch_size": 512,
+      "transfer_batch_size": 256,
+      "transfer_epochs": 200,
+      "patience": 30,
+      "min_epochs": 20,
+      "lr": 0.0001,
+      "transfer_lr": 3e-05,
+      "weight_decay": 0.0001,
+      "grad_clip": 1.0,
+      "support_fractions": [
+        0.01,
+        0.05,
+        0.1
+      ],
+      "cap_quantile": 0.995,
+      "cap_margin": 0.05,
+      "cap_source_lower_bound": true,
+      "selection": "minimum validation Macro MAE, initial candidate included; no test selection",
+      "early_stop_min_delta": 0.0,
+      "drop_last": false,
+      "precision": "float32",
+      "optimizer": "AdamW",
+      "scheduler": "none",
+      "validation_only": true,
+      "experiment": "pcsa_history_sequential_v1",
+      "experiment_seeds": [
+        7,
+        42,
+        123
+      ],
+      "smoke_only": false,
+      "schedules": {
+        "history_sequential": [
+          "history:160 reused",
+          "frozen_history_base:80",
+          "frozen_base_residual:80"
+        ]
+      },
+      "history_pretrain_loss": "masked scaled L1 of capped history + 0.1 state BCE",
+      "history_pretrain_selection": "minimum validation historical macro MAE in kW",
+      "budget_note": "320 maximum passes including reused history; new work at most 160 passes",
+      "sequential_epochs": {
+        "history_reused": 160,
+        "base": 80,
+        "residual": 80
+      },
+      "reused_history": {
+        "7": {
+          "checkpoint": "/home/dell/work_ywj/pisa_framework_v1/outputs/history_pretrain_v1/seed_7/history_pretrain/history/best.pt",
+          "sha256": "c208ff9bee67717d15b75b7ef3bdd9c751967bca1178cc61b7aa6f785b6f12b1"
+        },
+        "42": {
+          "checkpoint": "/home/dell/work_ywj/pisa_framework_v1/outputs/history_pretrain_v1/seed_42/history_pretrain/history/best.pt",
+          "sha256": "c402c2be422ddd9396fa8e703d652c14b57c71b7e5c994d9deb20956d6334620"
+        },
+        "123": {
+          "checkpoint": "/home/dell/work_ywj/pisa_framework_v1/outputs/history_pretrain_v1/seed_123/history_pretrain/history/best.pt",
+          "sha256": "593a6e8d099aade2eb5e649fbb72988eca95297b38a1af9493036dec97ced715"
+        }
+      }
+    },
+    "stage_summaries": [
+      {
+        "smoke_only": false,
+        "epochs_run": 143,
+        "selected_epoch": 113,
+        "best_val_macro_mae_kw": 0.023985251784324646,
+        "optimizer_steps": 5577,
+        "training_seconds": 900.8518492421135,
+        "total_wall_seconds": 1025.0824832012877,
+        "trainable_parameters": 438792,
+        "total_parameters": 438792,
+        "parameter_max_updates": {
+          "encoder": 0.4548300504684448,
+          "history_head": 0.42027395963668823
+        },
+        "frozen_parameter_max_update": 0.0,
+        "frozen_buffers_unchanged": true,
+        "first_steps_gradients": [
+          {
+            "step": 0,
+            "groups": {
+              "encoder": {
+                "tensors": 58,
+                "none": 0,
+                "nonzero": 58,
+                "norm_sum": 9.986763377673924
+              },
+              "history_head": {
+                "tensors": 8,
+                "none": 0,
+                "nonzero": 8,
+                "norm_sum": 3.01575125195086
+              }
+            }
+          },
+          {
+            "step": 1,
+            "groups": {
+              "encoder": {
+                "tensors": 58,
+                "none": 0,
+                "nonzero": 58,
+                "norm_sum": 9.461358341854066
+              },
+              "history_head": {
+                "tensors": 8,
+                "none": 0,
+                "nonzero": 8,
+                "norm_sum": 2.866204898804426
+              }
+            }
+          },
+          {
+            "step": 2,
+            "groups": {
+              "encoder": {
+                "tensors": 58,
+                "none": 0,
+                "nonzero": 58,
+                "norm_sum": 8.663132574874908
+              },
+              "history_head": {
+                "tensors": 8,
+                "none": 0,
+                "nonzero": 8,
+                "norm_sum": 2.707173265516758
+              }
+            }
+          }
+        ],
+        "train_labels": {
+          "windows": 19730,
+          "unique_future_timestamps": 0,
+          "unique_history_timestamps": 28299,
+          "window_coverage_timestamps": 28299,
+          "unique_label_timestamps_union": 28299,
+          "valid_appliance_labels_by_channel": [
+            27365,
+            28299,
+            27229,
+            28299
+          ],
+          "first_label_time": "2018-09-01 00:00:00-05",
+          "last_label_time": "2018-09-20 23:29:00-05",
+          "label_span_minutes": 28770,
+          "elapsed_from_split_start_minutes": 28770,
+          "indices_sha256": "ac8f633ab3195fce26aa8ab21d7ee541b75ccae5f804a2718eb65b237c2856a7"
+        },
+        "validation_labels": {
+          "windows": 5420,
+          "unique_future_timestamps": 0,
+          "unique_history_timestamps": 7142,
+          "window_coverage_timestamps": 7142,
+          "unique_label_timestamps_union": 7142,
+          "valid_appliance_labels_by_channel": [
+            6999,
+            7142,
+            6880,
+            7142
+          ],
+          "first_label_time": "2018-09-21 00:00:00-05",
+          "last_label_time": "2018-09-25 23:28:00-05",
+          "label_span_minutes": 7169,
+          "elapsed_from_split_start_minutes": 7169,
+          "indices_sha256": "41d3e353d7da9768b87af1094c66a280f17bbd93e29da502cbb5ed0def21e991"
+        },
+        "selection": "validation MAE, including initial candidate; test unused"
+      },
+      {
+        "smoke_only": false,
+        "epochs_run": 38,
+        "selected_epoch": 8,
+        "best_val_macro_mae_kw": 0.06041495501995087,
+        "optimizer_steps": 1482,
+        "training_seconds": 364.966481375508,
+        "total_wall_seconds": 404.38302890677005,
+        "trainable_parameters": 1127212,
+        "total_parameters": 1566004,
+        "parameter_max_updates": {
+          "other": 0.19652950763702393
+        },
+        "frozen_parameter_max_update": 0.0,
+        "frozen_buffers_unchanged": true,
+        "first_steps_gradients": [
+          {
+            "step": 0,
+            "groups": {
+              "other": {
+                "tensors": 260,
+                "none": 60,
+                "nonzero": 168,
+                "norm_sum": 16.514521011315082
+              }
+            }
+          },
+          {
+            "step": 1,
+            "groups": {
+              "other": {
+                "tensors": 260,
+                "none": 60,
+                "nonzero": 168,
+                "norm_sum": 10.433775624383998
+              }
+            }
+          },
+          {
+            "step": 2,
+            "groups": {
+              "other": {
+                "tensors": 260,
+                "none": 60,
+                "nonzero": 168,
+                "norm_sum": 6.538909421615244
+              }
+            }
+          }
+        ],
+        "train_labels": {
+          "windows": 19730,
+          "unique_future_timestamps": 25008,
+          "unique_history_timestamps": 0,
+          "window_coverage_timestamps": 25008,
+          "unique_label_timestamps_union": 25008,
+          "valid_appliance_labels_by_channel": [
+            25008,
+            25008,
+            25008,
+            25008
+          ],
+          "first_label_time": "2018-09-01 02:00:00-05",
+          "last_label_time": "2018-09-20 23:59:00-05",
+          "label_span_minutes": 28680,
+          "elapsed_from_split_start_minutes": 28800,
+          "indices_sha256": "ac8f633ab3195fce26aa8ab21d7ee541b75ccae5f804a2718eb65b237c2856a7"
+        },
+        "validation_labels": {
+          "windows": 5420,
+          "unique_future_timestamps": 6493,
+          "unique_history_timestamps": 0,
+          "window_coverage_timestamps": 6493,
+          "unique_label_timestamps_union": 6493,
+          "valid_appliance_labels_by_channel": [
+            6493,
+            6493,
+            6493,
+            6493
+          ],
+          "first_label_time": "2018-09-21 02:00:00-05",
+          "last_label_time": "2018-09-25 23:58:00-05",
+          "label_span_minutes": 7079,
+          "elapsed_from_split_start_minutes": 7199,
+          "indices_sha256": "41d3e353d7da9768b87af1094c66a280f17bbd93e29da502cbb5ed0def21e991"
+        },
+        "selection": "validation MAE, including initial candidate; test unused"
+      },
+      {
+        "smoke_only": false,
+        "epochs_run": 80,
+        "selected_epoch": 80,
+        "best_val_macro_mae_kw": 0.055913232266902924,
+        "optimizer_steps": 3120,
+        "training_seconds": 470.51504978956655,
+        "total_wall_seconds": 552.3729029977694,
+        "trainable_parameters": 268280,
+        "total_parameters": 1834284,
+        "parameter_max_updates": {
+          "residual_gates": 0.21901126205921173,
+          "residual_features": 0.262709379196167,
+          "residual_heads": 0.2056477814912796
+        },
+        "frozen_parameter_max_update": 0.0,
+        "frozen_buffers_unchanged": true,
+        "first_steps_gradients": [
+          {
+            "step": 0,
+            "groups": {
+              "residual_gates": {
+                "tensors": 2,
+                "none": 0,
+                "nonzero": 0,
+                "norm_sum": 0.0
+              },
+              "residual_features": {
+                "tensors": 104,
+                "none": 0,
+                "nonzero": 0,
+                "norm_sum": 0.0
+              },
+              "residual_heads": {
+                "tensors": 8,
+                "none": 0,
+                "nonzero": 8,
+                "norm_sum": 0.025028045705767
+              }
+            }
+          },
+          {
+            "step": 1,
+            "groups": {
+              "residual_gates": {
+                "tensors": 2,
+                "none": 0,
+                "nonzero": 2,
+                "norm_sum": 2.643958850967465e-05
+              },
+              "residual_features": {
+                "tensors": 104,
+                "none": 0,
+                "nonzero": 104,
+                "norm_sum": 0.00042520220099362405
+              },
+              "residual_heads": {
+                "tensors": 8,
+                "none": 0,
+                "nonzero": 8,
+                "norm_sum": 0.028112081112340093
+              }
+            }
+          },
+          {
+            "step": 2,
+            "groups": {
+              "residual_gates": {
+                "tensors": 2,
+                "none": 0,
+                "nonzero": 2,
+                "norm_sum": 4.552875270746881e-05
+              },
+              "residual_features": {
+                "tensors": 104,
+                "none": 0,
+                "nonzero": 104,
+                "norm_sum": 0.0006755939955951362
+              },
+              "residual_heads": {
+                "tensors": 8,
+                "none": 0,
+                "nonzero": 8,
+                "norm_sum": 0.025112407296546735
+              }
+            }
+          }
+        ],
+        "train_labels": {
+          "windows": 19730,
+          "unique_future_timestamps": 25008,
+          "unique_history_timestamps": 0,
+          "window_coverage_timestamps": 25008,
+          "unique_label_timestamps_union": 25008,
+          "valid_appliance_labels_by_channel": [
+            25008,
+            25008,
+            25008,
+            25008
+          ],
+          "first_label_time": "2018-09-01 02:00:00-05",
+          "last_label_time": "2018-09-20 23:59:00-05",
+          "label_span_minutes": 28680,
+          "elapsed_from_split_start_minutes": 28800,
+          "indices_sha256": "ac8f633ab3195fce26aa8ab21d7ee541b75ccae5f804a2718eb65b237c2856a7"
+        },
+        "validation_labels": {
+          "windows": 5420,
+          "unique_future_timestamps": 6493,
+          "unique_history_timestamps": 0,
+          "window_coverage_timestamps": 6493,
+          "unique_label_timestamps_union": 6493,
+          "valid_appliance_labels_by_channel": [
+            6493,
+            6493,
+            6493,
+            6493
+          ],
+          "first_label_time": "2018-09-21 02:00:00-05",
+          "last_label_time": "2018-09-25 23:58:00-05",
+          "label_span_minutes": 7079,
+          "elapsed_from_split_start_minutes": 7199,
+          "indices_sha256": "41d3e353d7da9768b87af1094c66a280f17bbd93e29da502cbb5ed0def21e991"
+        },
+        "selection": "validation MAE, including initial candidate; test unused"
+      }
+    ]
+  },
+  "7/aggregate": {
+    "path": "/home/dell/work_ywj/pisa_framework_v1/outputs/diagnostic_ofat_v1/control/seed_7/source/aggregate/best.pt",
+    "sha256": "0fa606cf2708b0cf6c96f5474e3fa0b08ff2a71055324206bf69210e423971a3",
+    "selected_epoch": 32,
+    "original_training_protocol": {
+      "protocol_id": "pcsa-r3-20261013-v1",
+      "seeds": [
+        7,
+        42,
+        123
+      ],
+      "source_home": 7951,
+      "target_homes": [
+        3039,
+        8386,
+        8565
+      ],
+      "data_dir": "data/austin_2018_sep_4homes",
+      "appliances": [
+        "air1",
+        "refrigerator1",
+        "dishwasher1",
+        "microwave1"
+      ],
+      "thresholds": [
+        0.5,
+        0.05,
+        0.05,
+        0.1
+      ],
+      "caps": [
+        3.0,
+        0.5,
+        2.0,
+        2.5
+      ],
+      "input_window": 120,
+      "horizon": 30,
+      "window_rule": "history_only",
+      "grid_semantics": "net_grid_import_export; negative readings excluded in archived extract",
+      "power_cap_mode": "smooth",
+      "state_gate_floor": 0.01,
+      "residual_gate_logit": 0.0,
+      "active_power_weight": 1.5,
+      "on_weight_actual": 2.5,
+      "lambda_amp_on": 0.05,
+      "lambda_state": 0.1,
+      "lambda_ghost": 0.05,
+      "lambda_agg": 0.0,
+      "lambda_history_power": 0.2,
+      "lambda_history_state": 0.1,
+      "source_epochs": {
+        "pcsa_base": 160,
+        "pcsa_residual": 160,
+        "nilm": 160,
+        "two_stage_forecast": 160,
+        "aggregate": 320
+      },
+      "source_batch_size": 512,
+      "transfer_batch_size": 256,
+      "transfer_epochs": 200,
+      "patience": 30,
+      "min_epochs": 20,
+      "lr": 0.0001,
+      "transfer_lr": 3e-05,
+      "weight_decay": 0.0001,
+      "grad_clip": 1.0,
+      "support_fractions": [
+        0.01,
+        0.05,
+        0.1
+      ],
+      "cap_quantile": 0.995,
+      "cap_margin": 0.05,
+      "cap_source_lower_bound": true,
+      "selection": "minimum validation Macro MAE, initial candidate included; no test selection",
+      "early_stop_min_delta": 0.0,
+      "drop_last": false,
+      "precision": "float32",
+      "optimizer": "AdamW",
+      "scheduler": "none",
+      "validation_only": true,
+      "diagnostic_variant": "control"
+    },
+    "stage_summaries": [
+      {
+        "smoke_only": false,
+        "epochs_run": 62,
+        "selected_epoch": 32,
+        "best_val_macro_mae_kw": 0.06682556122541428,
+        "optimizer_steps": 2418,
+        "training_seconds": 567.6860648998991,
+        "total_wall_seconds": 661.9929765788838,
+        "trainable_parameters": 108500,
+        "total_parameters": 108500,
+        "parameter_max_updates": {
+          "encoder": 0.1391761302947998,
+          "other": 0.1922115683555603
+        },
+        "frozen_parameter_max_update": 0.0,
+        "frozen_buffers_unchanged": true,
+        "first_steps_gradients": [
+          {
+            "step": 0,
+            "groups": {
+              "encoder": {
+                "tensors": 26,
+                "none": 0,
+                "nonzero": 26,
+                "norm_sum": 0.6177149317227304
+              },
+              "other": {
+                "tensors": 38,
+                "none": 0,
+                "nonzero": 38,
+                "norm_sum": 1.5615236747544259
+              }
+            }
+          },
+          {
+            "step": 1,
+            "groups": {
+              "encoder": {
+                "tensors": 26,
+                "none": 0,
+                "nonzero": 26,
+                "norm_sum": 0.5887954637873918
+              },
+              "other": {
+                "tensors": 38,
+                "none": 0,
+                "nonzero": 38,
+                "norm_sum": 1.5200506306719035
+              }
+            }
+          },
+          {
+            "step": 2,
+            "groups": {
+              "encoder": {
+                "tensors": 26,
+                "none": 0,
+                "nonzero": 26,
+                "norm_sum": 0.593043948058039
+              },
+              "other": {
+                "tensors": 38,
+                "none": 0,
+                "nonzero": 38,
+                "norm_sum": 1.5297339495446067
+              }
+            }
+          }
+        ],
+        "train_labels": {
+          "windows": 19730,
+          "unique_future_timestamps": 25008,
+          "unique_history_timestamps": 0,
+          "window_coverage_timestamps": 25008,
+          "unique_label_timestamps_union": 25008,
+          "valid_appliance_labels_by_channel": [
+            25008,
+            25008,
+            25008,
+            25008
+          ],
+          "first_label_time": "2018-09-01 02:00:00-05",
+          "last_label_time": "2018-09-20 23:59:00-05",
+          "label_span_minutes": 28680,
+          "elapsed_from_split_start_minutes": 28800,
+          "indices_sha256": "ac8f633ab3195fce26aa8ab21d7ee541b75ccae5f804a2718eb65b237c2856a7"
+        },
+        "validation_labels": {
+          "windows": 5420,
+          "unique_future_timestamps": 6493,
+          "unique_history_timestamps": 0,
+          "window_coverage_timestamps": 6493,
+          "unique_label_timestamps_union": 6493,
+          "valid_appliance_labels_by_channel": [
+            6493,
+            6493,
+            6493,
+            6493
+          ],
+          "first_label_time": "2018-09-21 02:00:00-05",
+          "last_label_time": "2018-09-25 23:58:00-05",
+          "label_span_minutes": 7079,
+          "elapsed_from_split_start_minutes": 7199,
+          "indices_sha256": "41d3e353d7da9768b87af1094c66a280f17bbd93e29da502cbb5ed0def21e991"
+        },
+        "selection": "validation MAE, including initial candidate; test unused"
+      }
+    ]
+  },
+  "7/two_stage": {
+    "path": "/home/dell/work_ywj/pisa_framework_v1/outputs/diagnostic_ofat_v1/control/seed_7/source/two_stage/best.pt",
+    "sha256": "86b61f2c53142eda5de564558686b87b3d537a5d7f270465353d85cb5c8d82f9",
+    "selected_epoch": 109,
+    "original_training_protocol": {
+      "protocol_id": "pcsa-r3-20261013-v1",
+      "seeds": [
+        7,
+        42,
+        123
+      ],
+      "source_home": 7951,
+      "target_homes": [
+        3039,
+        8386,
+        8565
+      ],
+      "data_dir": "data/austin_2018_sep_4homes",
+      "appliances": [
+        "air1",
+        "refrigerator1",
+        "dishwasher1",
+        "microwave1"
+      ],
+      "thresholds": [
+        0.5,
+        0.05,
+        0.05,
+        0.1
+      ],
+      "caps": [
+        3.0,
+        0.5,
+        2.0,
+        2.5
+      ],
+      "input_window": 120,
+      "horizon": 30,
+      "window_rule": "history_only",
+      "grid_semantics": "net_grid_import_export; negative readings excluded in archived extract",
+      "power_cap_mode": "smooth",
+      "state_gate_floor": 0.01,
+      "residual_gate_logit": 0.0,
+      "active_power_weight": 1.5,
+      "on_weight_actual": 2.5,
+      "lambda_amp_on": 0.05,
+      "lambda_state": 0.1,
+      "lambda_ghost": 0.05,
+      "lambda_agg": 0.0,
+      "lambda_history_power": 0.2,
+      "lambda_history_state": 0.1,
+      "source_epochs": {
+        "pcsa_base": 160,
+        "pcsa_residual": 160,
+        "nilm": 160,
+        "two_stage_forecast": 160,
+        "aggregate": 320
+      },
+      "source_batch_size": 512,
+      "transfer_batch_size": 256,
+      "transfer_epochs": 200,
+      "patience": 30,
+      "min_epochs": 20,
+      "lr": 0.0001,
+      "transfer_lr": 3e-05,
+      "weight_decay": 0.0001,
+      "grad_clip": 1.0,
+      "support_fractions": [
+        0.01,
+        0.05,
+        0.1
+      ],
+      "cap_quantile": 0.995,
+      "cap_margin": 0.05,
+      "cap_source_lower_bound": true,
+      "selection": "minimum validation Macro MAE, initial candidate included; no test selection",
+      "early_stop_min_delta": 0.0,
+      "drop_last": false,
+      "precision": "float32",
+      "optimizer": "AdamW",
+      "scheduler": "none",
+      "validation_only": true,
+      "diagnostic_variant": "control"
+    },
+    "stage_summaries": [
+      {
+        "smoke_only": false,
+        "epochs_run": 133,
+        "selected_epoch": 103,
+        "best_val_macro_mae_kw": 0.025753825902938843,
+        "optimizer_steps": 5187,
+        "training_seconds": 966.7895918004215,
+        "total_wall_seconds": 1195.4196348669939,
+        "trainable_parameters": 119944,
+        "total_parameters": 119944,
+        "parameter_max_updates": {
+          "encoder": 0.4580309987068176,
+          "other": 0.3095932602882385
+        },
+        "frozen_parameter_max_update": 0.0,
+        "frozen_buffers_unchanged": true,
+        "first_steps_gradients": [
+          {
+            "step": 0,
+            "groups": {
+              "encoder": {
+                "tensors": 16,
+                "none": 0,
+                "nonzero": 16,
+                "norm_sum": 1.5163695812225342
+              },
+              "other": {
+                "tensors": 8,
+                "none": 0,
+                "nonzero": 8,
+                "norm_sum": 1.4162235148251057
+              }
+            }
+          },
+          {
+            "step": 1,
+            "groups": {
+              "encoder": {
+                "tensors": 16,
+                "none": 0,
+                "nonzero": 16,
+                "norm_sum": 1.5208130404353142
+              },
+              "other": {
+                "tensors": 8,
+                "none": 0,
+                "nonzero": 8,
+                "norm_sum": 1.4017024524509907
+              }
+            }
+          },
+          {
+            "step": 2,
+            "groups": {
+              "encoder": {
+                "tensors": 16,
+                "none": 0,
+                "nonzero": 16,
+                "norm_sum": 1.440978605300188
+              },
+              "other": {
+                "tensors": 8,
+                "none": 0,
+                "nonzero": 8,
+                "norm_sum": 1.360460389405489
+              }
+            }
+          }
+        ],
+        "train_labels": {
+          "windows": 19730,
+          "unique_future_timestamps": 0,
+          "unique_history_timestamps": 28299,
+          "window_coverage_timestamps": 28299,
+          "unique_label_timestamps_union": 28299,
+          "valid_appliance_labels_by_channel": [
+            27365,
+            28299,
+            27229,
+            28299
+          ],
+          "first_label_time": "2018-09-01 00:00:00-05",
+          "last_label_time": "2018-09-20 23:29:00-05",
+          "label_span_minutes": 28770,
+          "elapsed_from_split_start_minutes": 28770,
+          "indices_sha256": "ac8f633ab3195fce26aa8ab21d7ee541b75ccae5f804a2718eb65b237c2856a7"
+        },
+        "validation_labels": {
+          "windows": 5420,
+          "unique_future_timestamps": 0,
+          "unique_history_timestamps": 7142,
+          "window_coverage_timestamps": 7142,
+          "unique_label_timestamps_union": 7142,
+          "valid_appliance_labels_by_channel": [
+            6999,
+            7142,
+            6880,
+            7142
+          ],
+          "first_label_time": "2018-09-21 00:00:00-05",
+          "last_label_time": "2018-09-25 23:28:00-05",
+          "label_span_minutes": 7169,
+          "elapsed_from_split_start_minutes": 7169,
+          "indices_sha256": "41d3e353d7da9768b87af1094c66a280f17bbd93e29da502cbb5ed0def21e991"
+        },
+        "selection": "validation MAE, including initial candidate; test unused"
+      },
+      {
+        "smoke_only": false,
+        "epochs_run": 139,
+        "selected_epoch": 109,
+        "best_val_macro_mae_kw": 0.059336621314287186,
+        "optimizer_steps": 5421,
+        "training_seconds": 1403.0713365748525,
+        "total_wall_seconds": 1629.9519140929915,
+        "trainable_parameters": 280340,
+        "total_parameters": 400284,
+        "parameter_max_updates": {
+          "encoder": 0.28924334049224854,
+          "other": 0.5320296883583069
+        },
+        "frozen_parameter_max_update": 0.0,
+        "frozen_buffers_unchanged": true,
+        "first_steps_gradients": [
+          {
+            "step": 0,
+            "groups": {
+              "encoder": {
+                "tensors": 104,
+                "none": 0,
+                "nonzero": 104,
+                "norm_sum": 2.6546394584147492
+              },
+              "other": {
+                "tensors": 36,
+                "none": 0,
+                "nonzero": 36,
+                "norm_sum": 1.4910604140604846
+              }
+            }
+          },
+          {
+            "step": 1,
+            "groups": {
+              "encoder": {
+                "tensors": 104,
+                "none": 0,
+                "nonzero": 104,
+                "norm_sum": 2.5147647452831734
+              },
+              "other": {
+                "tensors": 36,
+                "none": 0,
+                "nonzero": 36,
+                "norm_sum": 1.4462890110735316
+              }
+            }
+          },
+          {
+            "step": 2,
+            "groups": {
+              "encoder": {
+                "tensors": 104,
+                "none": 0,
+                "nonzero": 104,
+                "norm_sum": 2.494972946376947
+              },
+              "other": {
+                "tensors": 36,
+                "none": 0,
+                "nonzero": 36,
+                "norm_sum": 1.4567554368113633
+              }
+            }
+          }
+        ],
+        "train_labels": {
+          "windows": 19730,
+          "unique_future_timestamps": 25008,
+          "unique_history_timestamps": 0,
+          "window_coverage_timestamps": 25008,
+          "unique_label_timestamps_union": 25008,
+          "valid_appliance_labels_by_channel": [
+            25008,
+            25008,
+            25008,
+            25008
+          ],
+          "first_label_time": "2018-09-01 02:00:00-05",
+          "last_label_time": "2018-09-20 23:59:00-05",
+          "label_span_minutes": 28680,
+          "elapsed_from_split_start_minutes": 28800,
+          "indices_sha256": "ac8f633ab3195fce26aa8ab21d7ee541b75ccae5f804a2718eb65b237c2856a7"
+        },
+        "validation_labels": {
+          "windows": 5420,
+          "unique_future_timestamps": 6493,
+          "unique_history_timestamps": 0,
+          "window_coverage_timestamps": 6493,
+          "unique_label_timestamps_union": 6493,
+          "valid_appliance_labels_by_channel": [
+            6493,
+            6493,
+            6493,
+            6493
+          ],
+          "first_label_time": "2018-09-21 02:00:00-05",
+          "last_label_time": "2018-09-25 23:58:00-05",
+          "label_span_minutes": 7079,
+          "elapsed_from_split_start_minutes": 7199,
+          "indices_sha256": "41d3e353d7da9768b87af1094c66a280f17bbd93e29da502cbb5ed0def21e991"
+        },
+        "selection": "validation MAE, including initial candidate; test unused"
+      }
+    ]
+  },
+  "42/pcsa": {
+    "path": "/home/dell/work_ywj/pisa_framework_v1/outputs/history_sequential_v1/seed_42/history_sequential/residual/best.pt",
+    "sha256": "1cb87d97c30bc68b58605403603a3e4f3355882e5466d49df8864c14fc55de37",
+    "selected_epoch": 79,
+    "original_training_protocol": {
+      "protocol_id": "pcsa-r3-20261013-v1",
+      "seeds": [
+        7,
+        42,
+        123
+      ],
+      "source_home": 7951,
+      "target_homes": [
+        3039,
+        8386,
+        8565
+      ],
+      "data_dir": "data/austin_2018_sep_4homes",
+      "appliances": [
+        "air1",
+        "refrigerator1",
+        "dishwasher1",
+        "microwave1"
+      ],
+      "thresholds": [
+        0.5,
+        0.05,
+        0.05,
+        0.1
+      ],
+      "caps": [
+        3.0,
+        0.5,
+        2.0,
+        2.5
+      ],
+      "input_window": 120,
+      "horizon": 30,
+      "window_rule": "history_only",
+      "grid_semantics": "net_grid_import_export; negative readings excluded in archived extract",
+      "power_cap_mode": "smooth",
+      "state_gate_floor": 0.01,
+      "residual_gate_logit": 0.0,
+      "active_power_weight": 1.5,
+      "on_weight_actual": 2.5,
+      "lambda_amp_on": 0.05,
+      "lambda_state": 0.1,
+      "lambda_ghost": 0.05,
+      "lambda_agg": 0.0,
+      "lambda_history_power": 0.2,
+      "lambda_history_state": 0.1,
+      "source_epochs": {
+        "pcsa_base": 160,
+        "pcsa_residual": 160,
+        "nilm": 160,
+        "two_stage_forecast": 160,
+        "aggregate": 320
+      },
+      "source_batch_size": 512,
+      "transfer_batch_size": 256,
+      "transfer_epochs": 200,
+      "patience": 30,
+      "min_epochs": 20,
+      "lr": 0.0001,
+      "transfer_lr": 3e-05,
+      "weight_decay": 0.0001,
+      "grad_clip": 1.0,
+      "support_fractions": [
+        0.01,
+        0.05,
+        0.1
+      ],
+      "cap_quantile": 0.995,
+      "cap_margin": 0.05,
+      "cap_source_lower_bound": true,
+      "selection": "minimum validation Macro MAE, initial candidate included; no test selection",
+      "early_stop_min_delta": 0.0,
+      "drop_last": false,
+      "precision": "float32",
+      "optimizer": "AdamW",
+      "scheduler": "none",
+      "validation_only": true,
+      "experiment": "pcsa_history_sequential_v1",
+      "experiment_seeds": [
+        7,
+        42,
+        123
+      ],
+      "smoke_only": false,
+      "schedules": {
+        "history_sequential": [
+          "history:160 reused",
+          "frozen_history_base:80",
+          "frozen_base_residual:80"
+        ]
+      },
+      "history_pretrain_loss": "masked scaled L1 of capped history + 0.1 state BCE",
+      "history_pretrain_selection": "minimum validation historical macro MAE in kW",
+      "budget_note": "320 maximum passes including reused history; new work at most 160 passes",
+      "sequential_epochs": {
+        "history_reused": 160,
+        "base": 80,
+        "residual": 80
+      },
+      "reused_history": {
+        "7": {
+          "checkpoint": "/home/dell/work_ywj/pisa_framework_v1/outputs/history_pretrain_v1/seed_7/history_pretrain/history/best.pt",
+          "sha256": "c208ff9bee67717d15b75b7ef3bdd9c751967bca1178cc61b7aa6f785b6f12b1"
+        },
+        "42": {
+          "checkpoint": "/home/dell/work_ywj/pisa_framework_v1/outputs/history_pretrain_v1/seed_42/history_pretrain/history/best.pt",
+          "sha256": "c402c2be422ddd9396fa8e703d652c14b57c71b7e5c994d9deb20956d6334620"
+        },
+        "123": {
+          "checkpoint": "/home/dell/work_ywj/pisa_framework_v1/outputs/history_pretrain_v1/seed_123/history_pretrain/history/best.pt",
+          "sha256": "593a6e8d099aade2eb5e649fbb72988eca95297b38a1af9493036dec97ced715"
+        }
+      }
+    },
+    "stage_summaries": [
+      {
+        "smoke_only": false,
+        "epochs_run": 160,
+        "selected_epoch": 159,
+        "best_val_macro_mae_kw": 0.02626929059624672,
+        "optimizer_steps": 6240,
+        "training_seconds": 997.617754521314,
+        "total_wall_seconds": 1137.164550905116,
+        "trainable_parameters": 438792,
+        "total_parameters": 438792,
+        "parameter_max_updates": {
+          "encoder": 0.43277865648269653,
+          "history_head": 0.3764882981777191
+        },
+        "frozen_parameter_max_update": 0.0,
+        "frozen_buffers_unchanged": true,
+        "first_steps_gradients": [
+          {
+            "step": 0,
+            "groups": {
+              "encoder": {
+                "tensors": 58,
+                "none": 0,
+                "nonzero": 58,
+                "norm_sum": 7.599158716388047
+              },
+              "history_head": {
+                "tensors": 8,
+                "none": 0,
+                "nonzero": 8,
+                "norm_sum": 2.464208772405982
+              }
+            }
+          },
+          {
+            "step": 1,
+            "groups": {
+              "encoder": {
+                "tensors": 58,
+                "none": 0,
+                "nonzero": 58,
+                "norm_sum": 7.031691497191787
+              },
+              "history_head": {
+                "tensors": 8,
+                "none": 0,
+                "nonzero": 8,
+                "norm_sum": 2.322962176054716
+              }
+            }
+          },
+          {
+            "step": 2,
+            "groups": {
+              "encoder": {
+                "tensors": 58,
+                "none": 0,
+                "nonzero": 58,
+                "norm_sum": 6.382976189721376
+              },
+              "history_head": {
+                "tensors": 8,
+                "none": 0,
+                "nonzero": 8,
+                "norm_sum": 2.162541000172496
+              }
+            }
+          }
+        ],
+        "train_labels": {
+          "windows": 19730,
+          "unique_future_timestamps": 0,
+          "unique_history_timestamps": 28299,
+          "window_coverage_timestamps": 28299,
+          "unique_label_timestamps_union": 28299,
+          "valid_appliance_labels_by_channel": [
+            27365,
+            28299,
+            27229,
+            28299
+          ],
+          "first_label_time": "2018-09-01 00:00:00-05",
+          "last_label_time": "2018-09-20 23:29:00-05",
+          "label_span_minutes": 28770,
+          "elapsed_from_split_start_minutes": 28770,
+          "indices_sha256": "ac8f633ab3195fce26aa8ab21d7ee541b75ccae5f804a2718eb65b237c2856a7"
+        },
+        "validation_labels": {
+          "windows": 5420,
+          "unique_future_timestamps": 0,
+          "unique_history_timestamps": 7142,
+          "window_coverage_timestamps": 7142,
+          "unique_label_timestamps_union": 7142,
+          "valid_appliance_labels_by_channel": [
+            6999,
+            7142,
+            6880,
+            7142
+          ],
+          "first_label_time": "2018-09-21 00:00:00-05",
+          "last_label_time": "2018-09-25 23:28:00-05",
+          "label_span_minutes": 7169,
+          "elapsed_from_split_start_minutes": 7169,
+          "indices_sha256": "41d3e353d7da9768b87af1094c66a280f17bbd93e29da502cbb5ed0def21e991"
+        },
+        "selection": "validation MAE, including initial candidate; test unused"
+      },
+      {
+        "smoke_only": false,
+        "epochs_run": 61,
+        "selected_epoch": 31,
+        "best_val_macro_mae_kw": 0.06600768864154816,
+        "optimizer_steps": 2379,
+        "training_seconds": 471.83811867423356,
+        "total_wall_seconds": 538.336772589013,
+        "trainable_parameters": 1127212,
+        "total_parameters": 1566004,
+        "parameter_max_updates": {
+          "other": 0.24341291189193726
+        },
+        "frozen_parameter_max_update": 0.0,
+        "frozen_buffers_unchanged": true,
+        "first_steps_gradients": [
+          {
+            "step": 0,
+            "groups": {
+              "other": {
+                "tensors": 260,
+                "none": 60,
+                "nonzero": 168,
+                "norm_sum": 17.088632370123378
+              }
+            }
+          },
+          {
+            "step": 1,
+            "groups": {
+              "other": {
+                "tensors": 260,
+                "none": 60,
+                "nonzero": 168,
+                "norm_sum": 16.094412829275825
+              }
+            }
+          },
+          {
+            "step": 2,
+            "groups": {
+              "other": {
+                "tensors": 260,
+                "none": 60,
+                "nonzero": 168,
+                "norm_sum": 13.679516333075298
+              }
+            }
+          }
+        ],
+        "train_labels": {
+          "windows": 19730,
+          "unique_future_timestamps": 25008,
+          "unique_history_timestamps": 0,
+          "window_coverage_timestamps": 25008,
+          "unique_label_timestamps_union": 25008,
+          "valid_appliance_labels_by_channel": [
+            25008,
+            25008,
+            25008,
+            25008
+          ],
+          "first_label_time": "2018-09-01 02:00:00-05",
+          "last_label_time": "2018-09-20 23:59:00-05",
+          "label_span_minutes": 28680,
+          "elapsed_from_split_start_minutes": 28800,
+          "indices_sha256": "ac8f633ab3195fce26aa8ab21d7ee541b75ccae5f804a2718eb65b237c2856a7"
+        },
+        "validation_labels": {
+          "windows": 5420,
+          "unique_future_timestamps": 6493,
+          "unique_history_timestamps": 0,
+          "window_coverage_timestamps": 6493,
+          "unique_label_timestamps_union": 6493,
+          "valid_appliance_labels_by_channel": [
+            6493,
+            6493,
+            6493,
+            6493
+          ],
+          "first_label_time": "2018-09-21 02:00:00-05",
+          "last_label_time": "2018-09-25 23:58:00-05",
+          "label_span_minutes": 7079,
+          "elapsed_from_split_start_minutes": 7199,
+          "indices_sha256": "41d3e353d7da9768b87af1094c66a280f17bbd93e29da502cbb5ed0def21e991"
+        },
+        "selection": "validation MAE, including initial candidate; test unused"
+      },
+      {
+        "smoke_only": false,
+        "epochs_run": 80,
+        "selected_epoch": 79,
+        "best_val_macro_mae_kw": 0.06204921752214432,
+        "optimizer_steps": 3120,
+        "training_seconds": 456.633382759057,
+        "total_wall_seconds": 546.120038072113,
+        "trainable_parameters": 268280,
+        "total_parameters": 1834284,
+        "parameter_max_updates": {
+          "residual_gates": 0.28340020775794983,
+          "residual_features": 0.23052406311035156,
+          "residual_heads": 0.18621701002120972
+        },
+        "frozen_parameter_max_update": 0.0,
+        "frozen_buffers_unchanged": true,
+        "first_steps_gradients": [
+          {
+            "step": 0,
+            "groups": {
+              "residual_gates": {
+                "tensors": 2,
+                "none": 0,
+                "nonzero": 0,
+                "norm_sum": 0.0
+              },
+              "residual_features": {
+                "tensors": 104,
+                "none": 0,
+                "nonzero": 0,
+                "norm_sum": 0.0
+              },
+              "residual_heads": {
+                "tensors": 8,
+                "none": 0,
+                "nonzero": 8,
+                "norm_sum": 0.017315902456175536
+              }
+            }
+          },
+          {
+            "step": 1,
+            "groups": {
+              "residual_gates": {
+                "tensors": 2,
+                "none": 0,
+                "nonzero": 2,
+                "norm_sum": 1.9865020931320032e-05
+              },
+              "residual_features": {
+                "tensors": 104,
+                "none": 0,
+                "nonzero": 104,
+                "norm_sum": 0.0004911199889789941
+              },
+              "residual_heads": {
+                "tensors": 8,
+                "none": 0,
+                "nonzero": 8,
+                "norm_sum": 0.02351330130113638
+              }
+            }
+          },
+          {
+            "step": 2,
+            "groups": {
+              "residual_gates": {
+                "tensors": 2,
+                "none": 0,
+                "nonzero": 2,
+                "norm_sum": 2.7930014994126395e-05
+              },
+              "residual_features": {
+                "tensors": 104,
+                "none": 0,
+                "nonzero": 104,
+                "norm_sum": 0.0006428632253658861
+              },
+              "residual_heads": {
+                "tensors": 8,
+                "none": 0,
+                "nonzero": 8,
+                "norm_sum": 0.0162559829550446
+              }
+            }
+          }
+        ],
+        "train_labels": {
+          "windows": 19730,
+          "unique_future_timestamps": 25008,
+          "unique_history_timestamps": 0,
+          "window_coverage_timestamps": 25008,
+          "unique_label_timestamps_union": 25008,
+          "valid_appliance_labels_by_channel": [
+            25008,
+            25008,
+            25008,
+            25008
+          ],
+          "first_label_time": "2018-09-01 02:00:00-05",
+          "last_label_time": "2018-09-20 23:59:00-05",
+          "label_span_minutes": 28680,
+          "elapsed_from_split_start_minutes": 28800,
+          "indices_sha256": "ac8f633ab3195fce26aa8ab21d7ee541b75ccae5f804a2718eb65b237c2856a7"
+        },
+        "validation_labels": {
+          "windows": 5420,
+          "unique_future_timestamps": 6493,
+          "unique_history_timestamps": 0,
+          "window_coverage_timestamps": 6493,
+          "unique_label_timestamps_union": 6493,
+          "valid_appliance_labels_by_channel": [
+            6493,
+            6493,
+            6493,
+            6493
+          ],
+          "first_label_time": "2018-09-21 02:00:00-05",
+          "last_label_time": "2018-09-25 23:58:00-05",
+          "label_span_minutes": 7079,
+          "elapsed_from_split_start_minutes": 7199,
+          "indices_sha256": "41d3e353d7da9768b87af1094c66a280f17bbd93e29da502cbb5ed0def21e991"
+        },
+        "selection": "validation MAE, including initial candidate; test unused"
+      }
+    ]
+  },
+  "42/aggregate": {
+    "path": "/home/dell/work_ywj/pisa_framework_v1/outputs/diagnostic_ofat_v1/control/seed_42/source/aggregate/best.pt",
+    "sha256": "29f943c5833268e74e5e5870f85275568a53a0933f034c02dbeb5d0698967e7c",
+    "selected_epoch": 40,
+    "original_training_protocol": {
+      "protocol_id": "pcsa-r3-20261013-v1",
+      "seeds": [
+        7,
+        42,
+        123
+      ],
+      "source_home": 7951,
+      "target_homes": [
+        3039,
+        8386,
+        8565
+      ],
+      "data_dir": "data/austin_2018_sep_4homes",
+      "appliances": [
+        "air1",
+        "refrigerator1",
+        "dishwasher1",
+        "microwave1"
+      ],
+      "thresholds": [
+        0.5,
+        0.05,
+        0.05,
+        0.1
+      ],
+      "caps": [
+        3.0,
+        0.5,
+        2.0,
+        2.5
+      ],
+      "input_window": 120,
+      "horizon": 30,
+      "window_rule": "history_only",
+      "grid_semantics": "net_grid_import_export; negative readings excluded in archived extract",
+      "power_cap_mode": "smooth",
+      "state_gate_floor": 0.01,
+      "residual_gate_logit": 0.0,
+      "active_power_weight": 1.5,
+      "on_weight_actual": 2.5,
+      "lambda_amp_on": 0.05,
+      "lambda_state": 0.1,
+      "lambda_ghost": 0.05,
+      "lambda_agg": 0.0,
+      "lambda_history_power": 0.2,
+      "lambda_history_state": 0.1,
+      "source_epochs": {
+        "pcsa_base": 160,
+        "pcsa_residual": 160,
+        "nilm": 160,
+        "two_stage_forecast": 160,
+        "aggregate": 320
+      },
+      "source_batch_size": 512,
+      "transfer_batch_size": 256,
+      "transfer_epochs": 200,
+      "patience": 30,
+      "min_epochs": 20,
+      "lr": 0.0001,
+      "transfer_lr": 3e-05,
+      "weight_decay": 0.0001,
+      "grad_clip": 1.0,
+      "support_fractions": [
+        0.01,
+        0.05,
+        0.1
+      ],
+      "cap_quantile": 0.995,
+      "cap_margin": 0.05,
+      "cap_source_lower_bound": true,
+      "selection": "minimum validation Macro MAE, initial candidate included; no test selection",
+      "early_stop_min_delta": 0.0,
+      "drop_last": false,
+      "precision": "float32",
+      "optimizer": "AdamW",
+      "scheduler": "none",
+      "validation_only": true,
+      "diagnostic_variant": "control"
+    },
+    "stage_summaries": [
+      {
+        "smoke_only": false,
+        "epochs_run": 70,
+        "selected_epoch": 40,
+        "best_val_macro_mae_kw": 0.06725147366523743,
+        "optimizer_steps": 2730,
+        "training_seconds": 470.29744537267834,
+        "total_wall_seconds": 528.647566835396,
+        "trainable_parameters": 108500,
+        "total_parameters": 108500,
+        "parameter_max_updates": {
+          "encoder": 0.18298077583312988,
+          "other": 0.23428408801555634
+        },
+        "frozen_parameter_max_update": 0.0,
+        "frozen_buffers_unchanged": true,
+        "first_steps_gradients": [
+          {
+            "step": 0,
+            "groups": {
+              "encoder": {
+                "tensors": 26,
+                "none": 0,
+                "nonzero": 26,
+                "norm_sum": 0.61807851633057
+              },
+              "other": {
+                "tensors": 38,
+                "none": 0,
+                "nonzero": 38,
+                "norm_sum": 1.5096790640382096
+              }
+            }
+          },
+          {
+            "step": 1,
+            "groups": {
+              "encoder": {
+                "tensors": 26,
+                "none": 0,
+                "nonzero": 26,
+                "norm_sum": 0.639929439406842
+              },
+              "other": {
+                "tensors": 38,
+                "none": 0,
+                "nonzero": 38,
+                "norm_sum": 1.5471137354034
+              }
+            }
+          },
+          {
+            "step": 2,
+            "groups": {
+              "encoder": {
+                "tensors": 26,
+                "none": 0,
+                "nonzero": 26,
+                "norm_sum": 0.6277212183922529
+              },
+              "other": {
+                "tensors": 38,
+                "none": 0,
+                "nonzero": 38,
+                "norm_sum": 1.4999131493386813
+              }
+            }
+          }
+        ],
+        "train_labels": {
+          "windows": 19730,
+          "unique_future_timestamps": 25008,
+          "unique_history_timestamps": 0,
+          "window_coverage_timestamps": 25008,
+          "unique_label_timestamps_union": 25008,
+          "valid_appliance_labels_by_channel": [
+            25008,
+            25008,
+            25008,
+            25008
+          ],
+          "first_label_time": "2018-09-01 02:00:00-05",
+          "last_label_time": "2018-09-20 23:59:00-05",
+          "label_span_minutes": 28680,
+          "elapsed_from_split_start_minutes": 28800,
+          "indices_sha256": "ac8f633ab3195fce26aa8ab21d7ee541b75ccae5f804a2718eb65b237c2856a7"
+        },
+        "validation_labels": {
+          "windows": 5420,
+          "unique_future_timestamps": 6493,
+          "unique_history_timestamps": 0,
+          "window_coverage_timestamps": 6493,
+          "unique_label_timestamps_union": 6493,
+          "valid_appliance_labels_by_channel": [
+            6493,
+            6493,
+            6493,
+            6493
+          ],
+          "first_label_time": "2018-09-21 02:00:00-05",
+          "last_label_time": "2018-09-25 23:58:00-05",
+          "label_span_minutes": 7079,
+          "elapsed_from_split_start_minutes": 7199,
+          "indices_sha256": "41d3e353d7da9768b87af1094c66a280f17bbd93e29da502cbb5ed0def21e991"
+        },
+        "selection": "validation MAE, including initial candidate; test unused"
+      }
+    ]
+  },
+  "42/two_stage": {
+    "path": "/home/dell/work_ywj/pisa_framework_v1/outputs/diagnostic_ofat_v1/control/seed_42/source/two_stage/best.pt",
+    "sha256": "20bf134b5442af20aee1a43f6e6abcc771cc3a14d309458ff032d317098a0fbb",
+    "selected_epoch": 57,
+    "original_training_protocol": {
+      "protocol_id": "pcsa-r3-20261013-v1",
+      "seeds": [
+        7,
+        42,
+        123
+      ],
+      "source_home": 7951,
+      "target_homes": [
+        3039,
+        8386,
+        8565
+      ],
+      "data_dir": "data/austin_2018_sep_4homes",
+      "appliances": [
+        "air1",
+        "refrigerator1",
+        "dishwasher1",
+        "microwave1"
+      ],
+      "thresholds": [
+        0.5,
+        0.05,
+        0.05,
+        0.1
+      ],
+      "caps": [
+        3.0,
+        0.5,
+        2.0,
+        2.5
+      ],
+      "input_window": 120,
+      "horizon": 30,
+      "window_rule": "history_only",
+      "grid_semantics": "net_grid_import_export; negative readings excluded in archived extract",
+      "power_cap_mode": "smooth",
+      "state_gate_floor": 0.01,
+      "residual_gate_logit": 0.0,
+      "active_power_weight": 1.5,
+      "on_weight_actual": 2.5,
+      "lambda_amp_on": 0.05,
+      "lambda_state": 0.1,
+      "lambda_ghost": 0.05,
+      "lambda_agg": 0.0,
+      "lambda_history_power": 0.2,
+      "lambda_history_state": 0.1,
+      "source_epochs": {
+        "pcsa_base": 160,
+        "pcsa_residual": 160,
+        "nilm": 160,
+        "two_stage_forecast": 160,
+        "aggregate": 320
+      },
+      "source_batch_size": 512,
+      "transfer_batch_size": 256,
+      "transfer_epochs": 200,
+      "patience": 30,
+      "min_epochs": 20,
+      "lr": 0.0001,
+      "transfer_lr": 3e-05,
+      "weight_decay": 0.0001,
+      "grad_clip": 1.0,
+      "support_fractions": [
+        0.01,
+        0.05,
+        0.1
+      ],
+      "cap_quantile": 0.995,
+      "cap_margin": 0.05,
+      "cap_source_lower_bound": true,
+      "selection": "minimum validation Macro MAE, initial candidate included; no test selection",
+      "early_stop_min_delta": 0.0,
+      "drop_last": false,
+      "precision": "float32",
+      "optimizer": "AdamW",
+      "scheduler": "none",
+      "validation_only": true,
+      "diagnostic_variant": "control"
+    },
+    "stage_summaries": [
+      {
+        "smoke_only": false,
+        "epochs_run": 160,
+        "selected_epoch": 154,
+        "best_val_macro_mae_kw": 0.026339605450630188,
+        "optimizer_steps": 6240,
+        "training_seconds": 906.8637895192951,
+        "total_wall_seconds": 1046.4042620006949,
+        "trainable_parameters": 119944,
+        "total_parameters": 119944,
+        "parameter_max_updates": {
+          "encoder": 0.5511283874511719,
+          "other": 0.4130653142929077
+        },
+        "frozen_parameter_max_update": 0.0,
+        "frozen_buffers_unchanged": true,
+        "first_steps_gradients": [
+          {
+            "step": 0,
+            "groups": {
+              "encoder": {
+                "tensors": 16,
+                "none": 0,
+                "nonzero": 16,
+                "norm_sum": 1.265633087605238
+              },
+              "other": {
+                "tensors": 8,
+                "none": 0,
+                "nonzero": 8,
+                "norm_sum": 1.385112525895238
+              }
+            }
+          },
+          {
+            "step": 1,
+            "groups": {
+              "encoder": {
+                "tensors": 16,
+                "none": 0,
+                "nonzero": 16,
+                "norm_sum": 1.276254665106535
+              },
+              "other": {
+                "tensors": 8,
+                "none": 0,
+                "nonzero": 8,
+                "norm_sum": 1.3787796795368195
+              }
+            }
+          },
+          {
+            "step": 2,
+            "groups": {
+              "encoder": {
+                "tensors": 16,
+                "none": 0,
+                "nonzero": 16,
+                "norm_sum": 1.2197821848094463
+              },
+              "other": {
+                "tensors": 8,
+                "none": 0,
+                "nonzero": 8,
+                "norm_sum": 1.335243746638298
+              }
+            }
+          }
+        ],
+        "train_labels": {
+          "windows": 19730,
+          "unique_future_timestamps": 0,
+          "unique_history_timestamps": 28299,
+          "window_coverage_timestamps": 28299,
+          "unique_label_timestamps_union": 28299,
+          "valid_appliance_labels_by_channel": [
+            27365,
+            28299,
+            27229,
+            28299
+          ],
+          "first_label_time": "2018-09-01 00:00:00-05",
+          "last_label_time": "2018-09-20 23:29:00-05",
+          "label_span_minutes": 28770,
+          "elapsed_from_split_start_minutes": 28770,
+          "indices_sha256": "ac8f633ab3195fce26aa8ab21d7ee541b75ccae5f804a2718eb65b237c2856a7"
+        },
+        "validation_labels": {
+          "windows": 5420,
+          "unique_future_timestamps": 0,
+          "unique_history_timestamps": 7142,
+          "window_coverage_timestamps": 7142,
+          "unique_label_timestamps_union": 7142,
+          "valid_appliance_labels_by_channel": [
+            6999,
+            7142,
+            6880,
+            7142
+          ],
+          "first_label_time": "2018-09-21 00:00:00-05",
+          "last_label_time": "2018-09-25 23:28:00-05",
+          "label_span_minutes": 7169,
+          "elapsed_from_split_start_minutes": 7169,
+          "indices_sha256": "41d3e353d7da9768b87af1094c66a280f17bbd93e29da502cbb5ed0def21e991"
+        },
+        "selection": "validation MAE, including initial candidate; test unused"
+      },
+      {
+        "smoke_only": false,
+        "epochs_run": 87,
+        "selected_epoch": 57,
+        "best_val_macro_mae_kw": 0.06279411166906357,
+        "optimizer_steps": 3393,
+        "training_seconds": 682.1271147318184,
+        "total_wall_seconds": 762.1126006268896,
+        "trainable_parameters": 280340,
+        "total_parameters": 400284,
+        "parameter_max_updates": {
+          "encoder": 0.26037728786468506,
+          "other": 0.398184597492218
+        },
+        "frozen_parameter_max_update": 0.0,
+        "frozen_buffers_unchanged": true,
+        "first_steps_gradients": [
+          {
+            "step": 0,
+            "groups": {
+              "encoder": {
+                "tensors": 104,
+                "none": 0,
+                "nonzero": 104,
+                "norm_sum": 2.8915671266586287
+              },
+              "other": {
+                "tensors": 36,
+                "none": 0,
+                "nonzero": 36,
+                "norm_sum": 1.5070946280902717
+              }
+            }
+          },
+          {
+            "step": 1,
+            "groups": {
+              "encoder": {
+                "tensors": 104,
+                "none": 0,
+                "nonzero": 104,
+                "norm_sum": 2.8746021830884274
+              },
+              "other": {
+                "tensors": 36,
+                "none": 0,
+                "nonzero": 36,
+                "norm_sum": 1.5067565232457127
+              }
+            }
+          },
+          {
+            "step": 2,
+            "groups": {
+              "encoder": {
+                "tensors": 104,
+                "none": 0,
+                "nonzero": 104,
+                "norm_sum": 2.8110080872575054
+              },
+              "other": {
+                "tensors": 36,
+                "none": 0,
+                "nonzero": 36,
+                "norm_sum": 1.4666099180758465
+              }
+            }
+          }
+        ],
+        "train_labels": {
+          "windows": 19730,
+          "unique_future_timestamps": 25008,
+          "unique_history_timestamps": 0,
+          "window_coverage_timestamps": 25008,
+          "unique_label_timestamps_union": 25008,
+          "valid_appliance_labels_by_channel": [
+            25008,
+            25008,
+            25008,
+            25008
+          ],
+          "first_label_time": "2018-09-01 02:00:00-05",
+          "last_label_time": "2018-09-20 23:59:00-05",
+          "label_span_minutes": 28680,
+          "elapsed_from_split_start_minutes": 28800,
+          "indices_sha256": "ac8f633ab3195fce26aa8ab21d7ee541b75ccae5f804a2718eb65b237c2856a7"
+        },
+        "validation_labels": {
+          "windows": 5420,
+          "unique_future_timestamps": 6493,
+          "unique_history_timestamps": 0,
+          "window_coverage_timestamps": 6493,
+          "unique_label_timestamps_union": 6493,
+          "valid_appliance_labels_by_channel": [
+            6493,
+            6493,
+            6493,
+            6493
+          ],
+          "first_label_time": "2018-09-21 02:00:00-05",
+          "last_label_time": "2018-09-25 23:58:00-05",
+          "label_span_minutes": 7079,
+          "elapsed_from_split_start_minutes": 7199,
+          "indices_sha256": "41d3e353d7da9768b87af1094c66a280f17bbd93e29da502cbb5ed0def21e991"
+        },
+        "selection": "validation MAE, including initial candidate; test unused"
+      }
+    ]
+  },
+  "123/pcsa": {
+    "path": "/home/dell/work_ywj/pisa_framework_v1/outputs/history_sequential_v1/seed_123/history_sequential/residual/best.pt",
+    "sha256": "f1485a3e6d576ee49a840c27c870040f417e4706f61a8df28bee48aae8b92153",
+    "selected_epoch": 71,
+    "original_training_protocol": {
+      "protocol_id": "pcsa-r3-20261013-v1",
+      "seeds": [
+        7,
+        42,
+        123
+      ],
+      "source_home": 7951,
+      "target_homes": [
+        3039,
+        8386,
+        8565
+      ],
+      "data_dir": "data/austin_2018_sep_4homes",
+      "appliances": [
+        "air1",
+        "refrigerator1",
+        "dishwasher1",
+        "microwave1"
+      ],
+      "thresholds": [
+        0.5,
+        0.05,
+        0.05,
+        0.1
+      ],
+      "caps": [
+        3.0,
+        0.5,
+        2.0,
+        2.5
+      ],
+      "input_window": 120,
+      "horizon": 30,
+      "window_rule": "history_only",
+      "grid_semantics": "net_grid_import_export; negative readings excluded in archived extract",
+      "power_cap_mode": "smooth",
+      "state_gate_floor": 0.01,
+      "residual_gate_logit": 0.0,
+      "active_power_weight": 1.5,
+      "on_weight_actual": 2.5,
+      "lambda_amp_on": 0.05,
+      "lambda_state": 0.1,
+      "lambda_ghost": 0.05,
+      "lambda_agg": 0.0,
+      "lambda_history_power": 0.2,
+      "lambda_history_state": 0.1,
+      "source_epochs": {
+        "pcsa_base": 160,
+        "pcsa_residual": 160,
+        "nilm": 160,
+        "two_stage_forecast": 160,
+        "aggregate": 320
+      },
+      "source_batch_size": 512,
+      "transfer_batch_size": 256,
+      "transfer_epochs": 200,
+      "patience": 30,
+      "min_epochs": 20,
+      "lr": 0.0001,
+      "transfer_lr": 3e-05,
+      "weight_decay": 0.0001,
+      "grad_clip": 1.0,
+      "support_fractions": [
+        0.01,
+        0.05,
+        0.1
+      ],
+      "cap_quantile": 0.995,
+      "cap_margin": 0.05,
+      "cap_source_lower_bound": true,
+      "selection": "minimum validation Macro MAE, initial candidate included; no test selection",
+      "early_stop_min_delta": 0.0,
+      "drop_last": false,
+      "precision": "float32",
+      "optimizer": "AdamW",
+      "scheduler": "none",
+      "validation_only": true,
+      "experiment": "pcsa_history_sequential_v1",
+      "experiment_seeds": [
+        7,
+        42,
+        123
+      ],
+      "smoke_only": false,
+      "schedules": {
+        "history_sequential": [
+          "history:160 reused",
+          "frozen_history_base:80",
+          "frozen_base_residual:80"
+        ]
+      },
+      "history_pretrain_loss": "masked scaled L1 of capped history + 0.1 state BCE",
+      "history_pretrain_selection": "minimum validation historical macro MAE in kW",
+      "budget_note": "320 maximum passes including reused history; new work at most 160 passes",
+      "sequential_epochs": {
+        "history_reused": 160,
+        "base": 80,
+        "residual": 80
+      },
+      "reused_history": {
+        "7": {
+          "checkpoint": "/home/dell/work_ywj/pisa_framework_v1/outputs/history_pretrain_v1/seed_7/history_pretrain/history/best.pt",
+          "sha256": "c208ff9bee67717d15b75b7ef3bdd9c751967bca1178cc61b7aa6f785b6f12b1"
+        },
+        "42": {
+          "checkpoint": "/home/dell/work_ywj/pisa_framework_v1/outputs/history_pretrain_v1/seed_42/history_pretrain/history/best.pt",
+          "sha256": "c402c2be422ddd9396fa8e703d652c14b57c71b7e5c994d9deb20956d6334620"
+        },
+        "123": {
+          "checkpoint": "/home/dell/work_ywj/pisa_framework_v1/outputs/history_pretrain_v1/seed_123/history_pretrain/history/best.pt",
+          "sha256": "593a6e8d099aade2eb5e649fbb72988eca95297b38a1af9493036dec97ced715"
+        }
+      }
+    },
+    "stage_summaries": [
+      {
+        "smoke_only": false,
+        "epochs_run": 129,
+        "selected_epoch": 99,
+        "best_val_macro_mae_kw": 0.027004992589354515,
+        "optimizer_steps": 5031,
+        "training_seconds": 811.9966358244419,
+        "total_wall_seconds": 935.9845655527897,
+        "trainable_parameters": 438792,
+        "total_parameters": 438792,
+        "parameter_max_updates": {
+          "encoder": 0.40589284896850586,
+          "history_head": 0.35213422775268555
+        },
+        "frozen_parameter_max_update": 0.0,
+        "frozen_buffers_unchanged": true,
+        "first_steps_gradients": [
+          {
+            "step": 0,
+            "groups": {
+              "encoder": {
+                "tensors": 58,
+                "none": 0,
+                "nonzero": 58,
+                "norm_sum": 7.238713292870671
+              },
+              "history_head": {
+                "tensors": 8,
+                "none": 0,
+                "nonzero": 8,
+                "norm_sum": 2.0980653036385775
+              }
+            }
+          },
+          {
+            "step": 1,
+            "groups": {
+              "encoder": {
+                "tensors": 58,
+                "none": 0,
+                "nonzero": 58,
+                "norm_sum": 6.663168792612851
+              },
+              "history_head": {
+                "tensors": 8,
+                "none": 0,
+                "nonzero": 8,
+                "norm_sum": 1.9320419449359179
+              }
+            }
+          },
+          {
+            "step": 2,
+            "groups": {
+              "encoder": {
+                "tensors": 58,
+                "none": 0,
+                "nonzero": 58,
+                "norm_sum": 6.075885647907853
+              },
+              "history_head": {
+                "tensors": 8,
+                "none": 0,
+                "nonzero": 8,
+                "norm_sum": 1.7842515371739864
+              }
+            }
+          }
+        ],
+        "train_labels": {
+          "windows": 19730,
+          "unique_future_timestamps": 0,
+          "unique_history_timestamps": 28299,
+          "window_coverage_timestamps": 28299,
+          "unique_label_timestamps_union": 28299,
+          "valid_appliance_labels_by_channel": [
+            27365,
+            28299,
+            27229,
+            28299
+          ],
+          "first_label_time": "2018-09-01 00:00:00-05",
+          "last_label_time": "2018-09-20 23:29:00-05",
+          "label_span_minutes": 28770,
+          "elapsed_from_split_start_minutes": 28770,
+          "indices_sha256": "ac8f633ab3195fce26aa8ab21d7ee541b75ccae5f804a2718eb65b237c2856a7"
+        },
+        "validation_labels": {
+          "windows": 5420,
+          "unique_future_timestamps": 0,
+          "unique_history_timestamps": 7142,
+          "window_coverage_timestamps": 7142,
+          "unique_label_timestamps_union": 7142,
+          "valid_appliance_labels_by_channel": [
+            6999,
+            7142,
+            6880,
+            7142
+          ],
+          "first_label_time": "2018-09-21 00:00:00-05",
+          "last_label_time": "2018-09-25 23:28:00-05",
+          "label_span_minutes": 7169,
+          "elapsed_from_split_start_minutes": 7169,
+          "indices_sha256": "41d3e353d7da9768b87af1094c66a280f17bbd93e29da502cbb5ed0def21e991"
+        },
+        "selection": "validation MAE, including initial candidate; test unused"
+      },
+      {
+        "smoke_only": false,
+        "epochs_run": 47,
+        "selected_epoch": 17,
+        "best_val_macro_mae_kw": 0.06380094587802887,
+        "optimizer_steps": 1833,
+        "training_seconds": 312.7526043448597,
+        "total_wall_seconds": 354.48208342306316,
+        "trainable_parameters": 1127212,
+        "total_parameters": 1566004,
+        "parameter_max_updates": {
+          "other": 0.22029104828834534
+        },
+        "frozen_parameter_max_update": 0.0,
+        "frozen_buffers_unchanged": true,
+        "first_steps_gradients": [
+          {
+            "step": 0,
+            "groups": {
+              "other": {
+                "tensors": 260,
+                "none": 60,
+                "nonzero": 168,
+                "norm_sum": 25.612577891733963
+              }
+            }
+          },
+          {
+            "step": 1,
+            "groups": {
+              "other": {
+                "tensors": 260,
+                "none": 60,
+                "nonzero": 168,
+                "norm_sum": 16.206771917130027
+              }
+            }
+          },
+          {
+            "step": 2,
+            "groups": {
+              "other": {
+                "tensors": 260,
+                "none": 60,
+                "nonzero": 168,
+                "norm_sum": 9.078343153738388
+              }
+            }
+          }
+        ],
+        "train_labels": {
+          "windows": 19730,
+          "unique_future_timestamps": 25008,
+          "unique_history_timestamps": 0,
+          "window_coverage_timestamps": 25008,
+          "unique_label_timestamps_union": 25008,
+          "valid_appliance_labels_by_channel": [
+            25008,
+            25008,
+            25008,
+            25008
+          ],
+          "first_label_time": "2018-09-01 02:00:00-05",
+          "last_label_time": "2018-09-20 23:59:00-05",
+          "label_span_minutes": 28680,
+          "elapsed_from_split_start_minutes": 28800,
+          "indices_sha256": "ac8f633ab3195fce26aa8ab21d7ee541b75ccae5f804a2718eb65b237c2856a7"
+        },
+        "validation_labels": {
+          "windows": 5420,
+          "unique_future_timestamps": 6493,
+          "unique_history_timestamps": 0,
+          "window_coverage_timestamps": 6493,
+          "unique_label_timestamps_union": 6493,
+          "valid_appliance_labels_by_channel": [
+            6493,
+            6493,
+            6493,
+            6493
+          ],
+          "first_label_time": "2018-09-21 02:00:00-05",
+          "last_label_time": "2018-09-25 23:58:00-05",
+          "label_span_minutes": 7079,
+          "elapsed_from_split_start_minutes": 7199,
+          "indices_sha256": "41d3e353d7da9768b87af1094c66a280f17bbd93e29da502cbb5ed0def21e991"
+        },
+        "selection": "validation MAE, including initial candidate; test unused"
+      },
+      {
+        "smoke_only": false,
+        "epochs_run": 80,
+        "selected_epoch": 71,
+        "best_val_macro_mae_kw": 0.05969250947237015,
+        "optimizer_steps": 3120,
+        "training_seconds": 439.98278595879674,
+        "total_wall_seconds": 520.15787452925,
+        "trainable_parameters": 268280,
+        "total_parameters": 1834284,
+        "parameter_max_updates": {
+          "residual_gates": 0.23027999699115753,
+          "residual_features": 0.27309131622314453,
+          "residual_heads": 0.21964067220687866
+        },
+        "frozen_parameter_max_update": 0.0,
+        "frozen_buffers_unchanged": true,
+        "first_steps_gradients": [
+          {
+            "step": 0,
+            "groups": {
+              "residual_gates": {
+                "tensors": 2,
+                "none": 0,
+                "nonzero": 0,
+                "norm_sum": 0.0
+              },
+              "residual_features": {
+                "tensors": 104,
+                "none": 0,
+                "nonzero": 0,
+                "norm_sum": 0.0
+              },
+              "residual_heads": {
+                "tensors": 8,
+                "none": 0,
+                "nonzero": 8,
+                "norm_sum": 0.022859635508211795
+              }
+            }
+          },
+          {
+            "step": 1,
+            "groups": {
+              "residual_gates": {
+                "tensors": 2,
+                "none": 0,
+                "nonzero": 2,
+                "norm_sum": 1.3873825537302764e-05
+              },
+              "residual_features": {
+                "tensors": 104,
+                "none": 0,
+                "nonzero": 104,
+                "norm_sum": 0.00029450202287684135
+              },
+              "residual_heads": {
+                "tensors": 8,
+                "none": 0,
+                "nonzero": 8,
+                "norm_sum": 0.014428088441491127
+              }
+            }
+          },
+          {
+            "step": 2,
+            "groups": {
+              "residual_gates": {
+                "tensors": 2,
+                "none": 0,
+                "nonzero": 2,
+                "norm_sum": 3.592453140299767e-05
+              },
+              "residual_features": {
+                "tensors": 104,
+                "none": 0,
+                "nonzero": 104,
+                "norm_sum": 0.0006599868141137222
+              },
+              "residual_heads": {
+                "tensors": 8,
+                "none": 0,
+                "nonzero": 8,
+                "norm_sum": 0.020294334884965792
+              }
+            }
+          }
+        ],
+        "train_labels": {
+          "windows": 19730,
+          "unique_future_timestamps": 25008,
+          "unique_history_timestamps": 0,
+          "window_coverage_timestamps": 25008,
+          "unique_label_timestamps_union": 25008,
+          "valid_appliance_labels_by_channel": [
+            25008,
+            25008,
+            25008,
+            25008
+          ],
+          "first_label_time": "2018-09-01 02:00:00-05",
+          "last_label_time": "2018-09-20 23:59:00-05",
+          "label_span_minutes": 28680,
+          "elapsed_from_split_start_minutes": 28800,
+          "indices_sha256": "ac8f633ab3195fce26aa8ab21d7ee541b75ccae5f804a2718eb65b237c2856a7"
+        },
+        "validation_labels": {
+          "windows": 5420,
+          "unique_future_timestamps": 6493,
+          "unique_history_timestamps": 0,
+          "window_coverage_timestamps": 6493,
+          "unique_label_timestamps_union": 6493,
+          "valid_appliance_labels_by_channel": [
+            6493,
+            6493,
+            6493,
+            6493
+          ],
+          "first_label_time": "2018-09-21 02:00:00-05",
+          "last_label_time": "2018-09-25 23:58:00-05",
+          "label_span_minutes": 7079,
+          "elapsed_from_split_start_minutes": 7199,
+          "indices_sha256": "41d3e353d7da9768b87af1094c66a280f17bbd93e29da502cbb5ed0def21e991"
+        },
+        "selection": "validation MAE, including initial candidate; test unused"
+      }
+    ]
+  },
+  "123/aggregate": {
+    "path": "/home/dell/work_ywj/pisa_framework_v1/outputs/diagnostic_ofat_v1/control/seed_123/source/aggregate/best.pt",
+    "sha256": "c9f24fe0e4d07d5dbaa7415b479cc910746cdba87501991d7b1af178a3559c2b",
+    "selected_epoch": 38,
+    "original_training_protocol": {
+      "protocol_id": "pcsa-r3-20261013-v1",
+      "seeds": [
+        7,
+        42,
+        123
+      ],
+      "source_home": 7951,
+      "target_homes": [
+        3039,
+        8386,
+        8565
+      ],
+      "data_dir": "data/austin_2018_sep_4homes",
+      "appliances": [
+        "air1",
+        "refrigerator1",
+        "dishwasher1",
+        "microwave1"
+      ],
+      "thresholds": [
+        0.5,
+        0.05,
+        0.05,
+        0.1
+      ],
+      "caps": [
+        3.0,
+        0.5,
+        2.0,
+        2.5
+      ],
+      "input_window": 120,
+      "horizon": 30,
+      "window_rule": "history_only",
+      "grid_semantics": "net_grid_import_export; negative readings excluded in archived extract",
+      "power_cap_mode": "smooth",
+      "state_gate_floor": 0.01,
+      "residual_gate_logit": 0.0,
+      "active_power_weight": 1.5,
+      "on_weight_actual": 2.5,
+      "lambda_amp_on": 0.05,
+      "lambda_state": 0.1,
+      "lambda_ghost": 0.05,
+      "lambda_agg": 0.0,
+      "lambda_history_power": 0.2,
+      "lambda_history_state": 0.1,
+      "source_epochs": {
+        "pcsa_base": 160,
+        "pcsa_residual": 160,
+        "nilm": 160,
+        "two_stage_forecast": 160,
+        "aggregate": 320
+      },
+      "source_batch_size": 512,
+      "transfer_batch_size": 256,
+      "transfer_epochs": 200,
+      "patience": 30,
+      "min_epochs": 20,
+      "lr": 0.0001,
+      "transfer_lr": 3e-05,
+      "weight_decay": 0.0001,
+      "grad_clip": 1.0,
+      "support_fractions": [
+        0.01,
+        0.05,
+        0.1
+      ],
+      "cap_quantile": 0.995,
+      "cap_margin": 0.05,
+      "cap_source_lower_bound": true,
+      "selection": "minimum validation Macro MAE, initial candidate included; no test selection",
+      "early_stop_min_delta": 0.0,
+      "drop_last": false,
+      "precision": "float32",
+      "optimizer": "AdamW",
+      "scheduler": "none",
+      "validation_only": true,
+      "diagnostic_variant": "control"
+    },
+    "stage_summaries": [
+      {
+        "smoke_only": false,
+        "epochs_run": 68,
+        "selected_epoch": 38,
+        "best_val_macro_mae_kw": 0.06704571098089218,
+        "optimizer_steps": 2652,
+        "training_seconds": 459.58667910657823,
+        "total_wall_seconds": 521.2399507719092,
+        "trainable_parameters": 108500,
+        "total_parameters": 108500,
+        "parameter_max_updates": {
+          "encoder": 0.13214504718780518,
+          "other": 0.28089427947998047
+        },
+        "frozen_parameter_max_update": 0.0,
+        "frozen_buffers_unchanged": true,
+        "first_steps_gradients": [
+          {
+            "step": 0,
+            "groups": {
+              "encoder": {
+                "tensors": 26,
+                "none": 0,
+                "nonzero": 26,
+                "norm_sum": 0.8485255790874362
+              },
+              "other": {
+                "tensors": 38,
+                "none": 0,
+                "nonzero": 38,
+                "norm_sum": 1.640576326957671
+              }
+            }
+          },
+          {
+            "step": 1,
+            "groups": {
+              "encoder": {
+                "tensors": 26,
+                "none": 0,
+                "nonzero": 26,
+                "norm_sum": 0.8085692864842713
+              },
+              "other": {
+                "tensors": 38,
+                "none": 0,
+                "nonzero": 38,
+                "norm_sum": 1.6059574616374448
+              }
+            }
+          },
+          {
+            "step": 2,
+            "groups": {
+              "encoder": {
+                "tensors": 26,
+                "none": 0,
+                "nonzero": 26,
+                "norm_sum": 0.7645741831511259
+              },
+              "other": {
+                "tensors": 38,
+                "none": 0,
+                "nonzero": 38,
+                "norm_sum": 1.5185880152566824
+              }
+            }
+          }
+        ],
+        "train_labels": {
+          "windows": 19730,
+          "unique_future_timestamps": 25008,
+          "unique_history_timestamps": 0,
+          "window_coverage_timestamps": 25008,
+          "unique_label_timestamps_union": 25008,
+          "valid_appliance_labels_by_channel": [
+            25008,
+            25008,
+            25008,
+            25008
+          ],
+          "first_label_time": "2018-09-01 02:00:00-05",
+          "last_label_time": "2018-09-20 23:59:00-05",
+          "label_span_minutes": 28680,
+          "elapsed_from_split_start_minutes": 28800,
+          "indices_sha256": "ac8f633ab3195fce26aa8ab21d7ee541b75ccae5f804a2718eb65b237c2856a7"
+        },
+        "validation_labels": {
+          "windows": 5420,
+          "unique_future_timestamps": 6493,
+          "unique_history_timestamps": 0,
+          "window_coverage_timestamps": 6493,
+          "unique_label_timestamps_union": 6493,
+          "valid_appliance_labels_by_channel": [
+            6493,
+            6493,
+            6493,
+            6493
+          ],
+          "first_label_time": "2018-09-21 02:00:00-05",
+          "last_label_time": "2018-09-25 23:58:00-05",
+          "label_span_minutes": 7079,
+          "elapsed_from_split_start_minutes": 7199,
+          "indices_sha256": "41d3e353d7da9768b87af1094c66a280f17bbd93e29da502cbb5ed0def21e991"
+        },
+        "selection": "validation MAE, including initial candidate; test unused"
+      }
+    ]
+  },
+  "123/two_stage": {
+    "path": "/home/dell/work_ywj/pisa_framework_v1/outputs/diagnostic_ofat_v1/control/seed_123/source/two_stage/best.pt",
+    "sha256": "3b5ebb0a0dc1948119fa597fc84a646b6526473bd493c6713be7e635e3f431f8",
+    "selected_epoch": 128,
+    "original_training_protocol": {
+      "protocol_id": "pcsa-r3-20261013-v1",
+      "seeds": [
+        7,
+        42,
+        123
+      ],
+      "source_home": 7951,
+      "target_homes": [
+        3039,
+        8386,
+        8565
+      ],
+      "data_dir": "data/austin_2018_sep_4homes",
+      "appliances": [
+        "air1",
+        "refrigerator1",
+        "dishwasher1",
+        "microwave1"
+      ],
+      "thresholds": [
+        0.5,
+        0.05,
+        0.05,
+        0.1
+      ],
+      "caps": [
+        3.0,
+        0.5,
+        2.0,
+        2.5
+      ],
+      "input_window": 120,
+      "horizon": 30,
+      "window_rule": "history_only",
+      "grid_semantics": "net_grid_import_export; negative readings excluded in archived extract",
+      "power_cap_mode": "smooth",
+      "state_gate_floor": 0.01,
+      "residual_gate_logit": 0.0,
+      "active_power_weight": 1.5,
+      "on_weight_actual": 2.5,
+      "lambda_amp_on": 0.05,
+      "lambda_state": 0.1,
+      "lambda_ghost": 0.05,
+      "lambda_agg": 0.0,
+      "lambda_history_power": 0.2,
+      "lambda_history_state": 0.1,
+      "source_epochs": {
+        "pcsa_base": 160,
+        "pcsa_residual": 160,
+        "nilm": 160,
+        "two_stage_forecast": 160,
+        "aggregate": 320
+      },
+      "source_batch_size": 512,
+      "transfer_batch_size": 256,
+      "transfer_epochs": 200,
+      "patience": 30,
+      "min_epochs": 20,
+      "lr": 0.0001,
+      "transfer_lr": 3e-05,
+      "weight_decay": 0.0001,
+      "grad_clip": 1.0,
+      "support_fractions": [
+        0.01,
+        0.05,
+        0.1
+      ],
+      "cap_quantile": 0.995,
+      "cap_margin": 0.05,
+      "cap_source_lower_bound": true,
+      "selection": "minimum validation Macro MAE, initial candidate included; no test selection",
+      "early_stop_min_delta": 0.0,
+      "drop_last": false,
+      "precision": "float32",
+      "optimizer": "AdamW",
+      "scheduler": "none",
+      "validation_only": true,
+      "diagnostic_variant": "control"
+    },
+    "stage_summaries": [
+      {
+        "smoke_only": false,
+        "epochs_run": 160,
+        "selected_epoch": 159,
+        "best_val_macro_mae_kw": 0.02675146795809269,
+        "optimizer_steps": 6240,
+        "training_seconds": 829.7514627431519,
+        "total_wall_seconds": 959.8737719613127,
+        "trainable_parameters": 119944,
+        "total_parameters": 119944,
+        "parameter_max_updates": {
+          "encoder": 0.5718963146209717,
+          "other": 0.39943721890449524
+        },
+        "frozen_parameter_max_update": 0.0,
+        "frozen_buffers_unchanged": true,
+        "first_steps_gradients": [
+          {
+            "step": 0,
+            "groups": {
+              "encoder": {
+                "tensors": 16,
+                "none": 0,
+                "nonzero": 16,
+                "norm_sum": 1.2888534888625145
+              },
+              "other": {
+                "tensors": 8,
+                "none": 0,
+                "nonzero": 8,
+                "norm_sum": 1.3611739985644817
+              }
+            }
+          },
+          {
+            "step": 1,
+            "groups": {
+              "encoder": {
+                "tensors": 16,
+                "none": 0,
+                "nonzero": 16,
+                "norm_sum": 1.2337165661156178
+              },
+              "other": {
+                "tensors": 8,
+                "none": 0,
+                "nonzero": 8,
+                "norm_sum": 1.315881121903658
+              }
+            }
+          },
+          {
+            "step": 2,
+            "groups": {
+              "encoder": {
+                "tensors": 16,
+                "none": 0,
+                "nonzero": 16,
+                "norm_sum": 1.2030255924910307
+              },
+              "other": {
+                "tensors": 8,
+                "none": 0,
+                "nonzero": 8,
+                "norm_sum": 1.2950342884287238
+              }
+            }
+          }
+        ],
+        "train_labels": {
+          "windows": 19730,
+          "unique_future_timestamps": 0,
+          "unique_history_timestamps": 28299,
+          "window_coverage_timestamps": 28299,
+          "unique_label_timestamps_union": 28299,
+          "valid_appliance_labels_by_channel": [
+            27365,
+            28299,
+            27229,
+            28299
+          ],
+          "first_label_time": "2018-09-01 00:00:00-05",
+          "last_label_time": "2018-09-20 23:29:00-05",
+          "label_span_minutes": 28770,
+          "elapsed_from_split_start_minutes": 28770,
+          "indices_sha256": "ac8f633ab3195fce26aa8ab21d7ee541b75ccae5f804a2718eb65b237c2856a7"
+        },
+        "validation_labels": {
+          "windows": 5420,
+          "unique_future_timestamps": 0,
+          "unique_history_timestamps": 7142,
+          "window_coverage_timestamps": 7142,
+          "unique_label_timestamps_union": 7142,
+          "valid_appliance_labels_by_channel": [
+            6999,
+            7142,
+            6880,
+            7142
+          ],
+          "first_label_time": "2018-09-21 00:00:00-05",
+          "last_label_time": "2018-09-25 23:28:00-05",
+          "label_span_minutes": 7169,
+          "elapsed_from_split_start_minutes": 7169,
+          "indices_sha256": "41d3e353d7da9768b87af1094c66a280f17bbd93e29da502cbb5ed0def21e991"
+        },
+        "selection": "validation MAE, including initial candidate; test unused"
+      },
+      {
+        "smoke_only": false,
+        "epochs_run": 158,
+        "selected_epoch": 128,
+        "best_val_macro_mae_kw": 0.05847833678126335,
+        "optimizer_steps": 6162,
+        "training_seconds": 1240.8745803427882,
+        "total_wall_seconds": 1392.1883871238679,
+        "trainable_parameters": 280340,
+        "total_parameters": 400284,
+        "parameter_max_updates": {
+          "encoder": 0.33621370792388916,
+          "other": 0.4934619665145874
+        },
+        "frozen_parameter_max_update": 0.0,
+        "frozen_buffers_unchanged": true,
+        "first_steps_gradients": [
+          {
+            "step": 0,
+            "groups": {
+              "encoder": {
+                "tensors": 104,
+                "none": 0,
+                "nonzero": 104,
+                "norm_sum": 3.0832058394153137
+              },
+              "other": {
+                "tensors": 36,
+                "none": 0,
+                "nonzero": 36,
+                "norm_sum": 1.4371007946319878
+              }
+            }
+          },
+          {
+            "step": 1,
+            "groups": {
+              "encoder": {
+                "tensors": 104,
+                "none": 0,
+                "nonzero": 104,
+                "norm_sum": 3.0031636702187825
+              },
+              "other": {
+                "tensors": 36,
+                "none": 0,
+                "nonzero": 36,
+                "norm_sum": 1.4034397968498524
+              }
+            }
+          },
+          {
+            "step": 2,
+            "groups": {
+              "encoder": {
+                "tensors": 104,
+                "none": 0,
+                "nonzero": 104,
+                "norm_sum": 2.917178717609204
+              },
+              "other": {
+                "tensors": 36,
+                "none": 0,
+                "nonzero": 36,
+                "norm_sum": 1.3412812507303897
+              }
+            }
+          }
+        ],
+        "train_labels": {
+          "windows": 19730,
+          "unique_future_timestamps": 25008,
+          "unique_history_timestamps": 0,
+          "window_coverage_timestamps": 25008,
+          "unique_label_timestamps_union": 25008,
+          "valid_appliance_labels_by_channel": [
+            25008,
+            25008,
+            25008,
+            25008
+          ],
+          "first_label_time": "2018-09-01 02:00:00-05",
+          "last_label_time": "2018-09-20 23:59:00-05",
+          "label_span_minutes": 28680,
+          "elapsed_from_split_start_minutes": 28800,
+          "indices_sha256": "ac8f633ab3195fce26aa8ab21d7ee541b75ccae5f804a2718eb65b237c2856a7"
+        },
+        "validation_labels": {
+          "windows": 5420,
+          "unique_future_timestamps": 6493,
+          "unique_history_timestamps": 0,
+          "window_coverage_timestamps": 6493,
+          "unique_label_timestamps_union": 6493,
+          "valid_appliance_labels_by_channel": [
+            6493,
+            6493,
+            6493,
+            6493
+          ],
+          "first_label_time": "2018-09-21 02:00:00-05",
+          "last_label_time": "2018-09-25 23:58:00-05",
+          "label_span_minutes": 7079,
+          "elapsed_from_split_start_minutes": 7199,
+          "indices_sha256": "41d3e353d7da9768b87af1094c66a280f17bbd93e29da502cbb5ed0def21e991"
+        },
+        "selection": "validation MAE, including initial candidate; test unused"
+      }
+    ]
+  }
+}

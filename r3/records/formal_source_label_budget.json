@@ -1,0 +1,38 @@
+{
+  "train": {
+    "windows": 19730,
+    "unique_future_timestamps": 25008,
+    "unique_history_timestamps": 28299,
+    "window_coverage_timestamps": 28492,
+    "unique_label_timestamps_union": 28492,
+    "valid_appliance_labels_by_channel": [
+      27558,
+      28492,
+      27422,
+      28492
+    ],
+    "first_label_time": "2018-09-01 00:00:00-05",
+    "last_label_time": "2018-09-20 23:59:00-05",
+    "label_span_minutes": 28800,
+    "elapsed_from_split_start_minutes": 28800,
+    "indices_sha256": "ac8f633ab3195fce26aa8ab21d7ee541b75ccae5f804a2718eb65b237c2856a7"
+  },
+  "val": {
+    "windows": 5420,
+    "unique_future_timestamps": 6493,
+    "unique_history_timestamps": 7142,
+    "window_coverage_timestamps": 7199,
+    "unique_label_timestamps_union": 7199,
+    "valid_appliance_labels_by_channel": [
+      7056,
+      7199,
+      6937,
+      7199
+    ],
+    "first_label_time": "2018-09-21 00:00:00-05",
+    "last_label_time": "2018-09-25 23:58:00-05",
+    "label_span_minutes": 7199,
+    "elapsed_from_split_start_minutes": 7199,
+    "indices_sha256": "41d3e353d7da9768b87af1094c66a280f17bbd93e29da502cbb5ed0def21e991"
+  }
+}

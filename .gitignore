@@ -13,3 +13,6 @@ archive/
 *.zip
 *.log
 .DS_Store
+
+# R3 metadata-only archives
+!r3/records/*.zip

@@ -1,0 +1,135 @@
+{
+  "protocol_id": "pcsa-r3-20261013-v1",
+  "seeds": [
+    7,
+    42,
+    123
+  ],
+  "source_home": 7951,
+  "target_homes": [
+    3039,
+    8386,
+    8565
+  ],
+  "data_dir": "data/austin_2018_sep_4homes",
+  "appliances": [
+    "air1",
+    "refrigerator1",
+    "dishwasher1",
+    "microwave1"
+  ],
+  "thresholds": [
+    0.5,
+    0.05,
+    0.05,
+    0.1
+  ],
+  "caps": [
+    3.0,
+    0.5,
+    2.0,
+    2.5
+  ],
+  "input_window": 120,
+  "horizon": 30,
+  "window_rule": "history_only",
+  "grid_semantics": "net_grid_import_export; negative readings excluded in archived extract",
+  "power_cap_mode": "smooth",
+  "state_gate_floor": 0.01,
+  "residual_gate_logit": 0.0,
+  "active_power_weight": 1.5,
+  "on_weight_actual": 2.5,
+  "lambda_amp_on": 0.05,
+  "lambda_state": 0.1,
+  "lambda_ghost": 0.05,
+  "lambda_agg": 0.0,
+  "lambda_history_power": 0.2,
+  "lambda_history_state": 0.1,
+  "source_epochs": {
+    "pcsa_base": 80,
+    "pcsa_residual": 80,
+    "nilm": 160,
+    "two_stage_forecast": 160,
+    "aggregate": 320,
+    "pcsa_history": 160
+  },
+  "source_batch_size": 512,
+  "transfer_batch_size": 256,
+  "transfer_epochs": 200,
+  "patience": 30,
+  "min_epochs": 20,
+  "lr": 0.0001,
+  "transfer_lr": 3e-05,
+  "weight_decay": 0.0001,
+  "grad_clip": 1.0,
+  "support_fractions": [
+    0.01,
+    0.05,
+    0.1
+  ],
+  "cap_quantile": 0.995,
+  "cap_margin": 0.05,
+  "cap_source_lower_bound": true,
+  "selection": "minimum validation Macro MAE, initial candidate included; no test selection",
+  "early_stop_min_delta": 0.0,
+  "drop_last": false,
+  "precision": "float32",
+  "optimizer": "AdamW",
+  "scheduler": "none",
+  "experiment": "pcsa_fixed_formal_evaluation_v1",
+  "validation_only": false,
+  "smoke_only": false,
+  "evaluation_seeds": [
+    7,
+    42,
+    123
+  ],
+  "method_description": "Two-stage framework: history pretraining, then forecasting with sequential base/residual optimization",
+  "checkpoint_provenance": {
+    "7/pcsa": {
+      "path": "/home/dell/work_ywj/pisa_framework_v1/outputs/history_sequential_v1/seed_7/history_sequential/residual/best.pt",
+      "sha256": "aa11c66dbc6907f2b30872b2454645ae88efdcf7d9aea04a606295ebb570cb65",
+      "selected_epoch": 80
+    },
+    "7/aggregate": {
+      "path": "/home/dell/work_ywj/pisa_framework_v1/outputs/diagnostic_ofat_v1/control/seed_7/source/aggregate/best.pt",
+      "sha256": "0fa606cf2708b0cf6c96f5474e3fa0b08ff2a71055324206bf69210e423971a3",
+      "selected_epoch": 32
+    },
+    "7/two_stage": {
+      "path": "/home/dell/work_ywj/pisa_framework_v1/outputs/diagnostic_ofat_v1/control/seed_7/source/two_stage/best.pt",
+      "sha256": "86b61f2c53142eda5de564558686b87b3d537a5d7f270465353d85cb5c8d82f9",
+      "selected_epoch": 109
+    },
+    "42/pcsa": {
+      "path": "/home/dell/work_ywj/pisa_framework_v1/outputs/history_sequential_v1/seed_42/history_sequential/residual/best.pt",
+      "sha256": "1cb87d97c30bc68b58605403603a3e4f3355882e5466d49df8864c14fc55de37",
+      "selected_epoch": 79
+    },
+    "42/aggregate": {
+      "path": "/home/dell/work_ywj/pisa_framework_v1/outputs/diagnostic_ofat_v1/control/seed_42/source/aggregate/best.pt",
+      "sha256": "29f943c5833268e74e5e5870f85275568a53a0933f034c02dbeb5d0698967e7c",
+      "selected_epoch": 40
+    },
+    "42/two_stage": {
+      "path": "/home/dell/work_ywj/pisa_framework_v1/outputs/diagnostic_ofat_v1/control/seed_42/source/two_stage/best.pt",
+      "sha256": "20bf134b5442af20aee1a43f6e6abcc771cc3a14d309458ff032d317098a0fbb",
+      "selected_epoch": 57
+    },
+    "123/pcsa": {
+      "path": "/home/dell/work_ywj/pisa_framework_v1/outputs/history_sequential_v1/seed_123/history_sequential/residual/best.pt",
+      "sha256": "f1485a3e6d576ee49a840c27c870040f417e4706f61a8df28bee48aae8b92153",
+      "selected_epoch": 71
+    },
+    "123/aggregate": {
+      "path": "/home/dell/work_ywj/pisa_framework_v1/outputs/diagnostic_ofat_v1/control/seed_123/source/aggregate/best.pt",
+      "sha256": "c9f24fe0e4d07d5dbaa7415b479cc910746cdba87501991d7b1af178a3559c2b",
+      "selected_epoch": 38
+    },
+    "123/two_stage": {
+      "path": "/home/dell/work_ywj/pisa_framework_v1/outputs/diagnostic_ofat_v1/control/seed_123/source/two_stage/best.pt",
+      "sha256": "3b5ebb0a0dc1948119fa597fc84a646b6526473bd493c6713be7e635e3f431f8",
+      "selected_epoch": 128
+    }
+  }
+}

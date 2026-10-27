@@ -1,0 +1,117 @@
+{
+  "protocol_id": "pcsa-r3-20261013-v1",
+  "seeds": [
+    7,
+    42,
+    123
+  ],
+  "source_home": 7951,
+  "target_homes": [
+    3039,
+    8386,
+    8565
+  ],
+  "data_dir": "data/austin_2018_sep_4homes",
+  "appliances": [
+    "air1",
+    "refrigerator1",
+    "dishwasher1",
+    "microwave1"
+  ],
+  "thresholds": [
+    0.5,
+    0.05,
+    0.05,
+    0.1
+  ],
+  "caps": [
+    3.0,
+    0.5,
+    2.0,
+    2.5
+  ],
+  "input_window": 120,
+  "horizon": 30,
+  "window_rule": "history_only",
+  "grid_semantics": "net_grid_import_export; negative readings excluded in archived extract",
+  "power_cap_mode": "smooth",
+  "state_gate_floor": 0.01,
+  "residual_gate_logit": 0.0,
+  "active_power_weight": 1.5,
+  "on_weight_actual": 2.5,
+  "lambda_amp_on": 0.05,
+  "lambda_state": 0.1,
+  "lambda_ghost": 0.05,
+  "lambda_agg": 0.0,
+  "lambda_history_power": 0.2,
+  "lambda_history_state": 0.1,
+  "source_epochs": {
+    "pcsa_base": 160,
+    "pcsa_residual": 160,
+    "nilm": 160,
+    "two_stage_forecast": 160,
+    "aggregate": 320
+  },
+  "source_batch_size": 512,
+  "transfer_batch_size": 256,
+  "transfer_epochs": 200,
+  "patience": 30,
+  "min_epochs": 20,
+  "lr": 0.0001,
+  "transfer_lr": 3e-05,
+  "weight_decay": 0.0001,
+  "grad_clip": 1.0,
+  "support_fractions": [
+    0.01,
+    0.05,
+    0.1
+  ],
+  "cap_quantile": 0.995,
+  "cap_margin": 0.05,
+  "cap_source_lower_bound": true,
+  "selection": "minimum validation Macro MAE, initial candidate included; no test selection",
+  "early_stop_min_delta": 0.0,
+  "drop_last": false,
+  "precision": "float32",
+  "optimizer": "AdamW",
+  "scheduler": "none",
+  "experiment": "pcsa_source_component_ablation_v1",
+  "smoke_only": false,
+  "experiment_seeds": [
+    7,
+    42,
+    123
+  ],
+  "entry_sha256": "e376d347299038b984d0a48a53fc04e4efb07e82ced844dd31c270603b5a74a2",
+  "history_provenance": {
+    "7": {
+      "history_sha256": "c208ff9bee67717d15b75b7ef3bdd9c751967bca1178cc61b7aa6f785b6f12b1",
+      "history_path": "/home/dell/work_ywj/pisa_framework_v1/outputs/history_pretrain_v1/seed_7/history_pretrain/history/best.pt",
+      "full_reference_test_sha256": "bc708047d3f8a1f6a09421139eb1d8e87aeb50e04dd8584abf6c588217778337"
+    },
+    "42": {
+      "history_sha256": "c402c2be422ddd9396fa8e703d652c14b57c71b7e5c994d9deb20956d6334620",
+      "history_path": "/home/dell/work_ywj/pisa_framework_v1/outputs/history_pretrain_v1/seed_42/history_pretrain/history/best.pt",
+      "full_reference_test_sha256": "5ed08b6f1d436572a885878e42ca03d7d3aa6fa2295492f8dd442698c33af4ea"
+    },
+    "123": {
+      "history_sha256": "593a6e8d099aade2eb5e649fbb72988eca95297b38a1af9493036dec97ced715",
+      "history_path": "/home/dell/work_ywj/pisa_framework_v1/outputs/history_pretrain_v1/seed_123/history_pretrain/history/best.pt",
+      "full_reference_test_sha256": "936a184bac6b31e8d457da04a50d28ebcb2ac9315d9006055dbe45b801609e5e"
+    }
+  },
+  "schedules": {
+    "no_residual": [
+      160,
+      80,
+      0
+    ],
+    "no_future_state_gate": [
+      160,
+      80,
+      80
+    ]
+  },
+  "scope": "Source7951 only; same future losses; no_future_state_gate removes output gating only, not state supervision or residual fusion gates",
+  "budget_note": "No-residual has 240 max total epochs; full and no-gate have 320. Not equal-compute architecture isolation."
+}
