@@ -16,3 +16,7 @@ archive/
 
 # R3 metadata-only archives
 !r3/records/*.zip
+
+# Data-loader source is code, not household data.
+!r3/src/data/
+!r3/src/data/*.py
