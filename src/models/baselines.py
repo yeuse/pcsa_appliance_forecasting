@@ -6,6 +6,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from torch import Tensor
+from .power_output import cap_amplitude
 
 
 class _CausalResidualBlock(nn.Module):
@@ -133,6 +134,8 @@ def _format_tcn_outputs(
     decoded: Tensor,
     rated_power: Tensor,
     z_app: Tensor,
+    power_cap_mode: str = "legacy",
+    state_gate_floor: float = 0.01,
 ) -> dict[str, Tensor]:
     """Convert [B, A, H, 5] decoder output to the common evaluation API."""
     power_raw = decoded[..., 0]
@@ -141,8 +144,14 @@ def _format_tcn_outputs(
     start_logits = decoded[..., 3]
     stop_logits = decoded[..., 4]
     p_on = torch.sigmoid(state_logits)
-    y_power = torch.minimum(F.softplus(power_raw) * p_on, rated_power)
+    amplitude = F.softplus(power_raw)
+    if power_cap_mode == "legacy":
+        y_power = torch.minimum(amplitude * p_on, rated_power)
+    else:
+        amplitude = cap_amplitude(amplitude, rated_power, power_cap_mode)
+        y_power = amplitude * (state_gate_floor + (1 - state_gate_floor) * p_on)
     return {
+        "amplitude_power": amplitude,
         "y_power": y_power,
         "bridge_power": y_power,
         "state_logits": state_logits,
@@ -217,7 +226,9 @@ class AggregateToApplianceTCN(nn.Module):
             [self.heads[index](z_app[:, index], future_time) for index in range(self.num_appliances)],
             dim=1,
         )
-        return _format_tcn_outputs(decoded, self.rated_power, z_app)
+        return _format_tcn_outputs(decoded, self.rated_power, z_app,
+                                   getattr(self, "power_cap_mode", "legacy"),
+                                   getattr(self, "state_gate_floor", 0.01))
 
 
 class ApplianceHistoryTCNForecaster(nn.Module):
@@ -300,7 +311,9 @@ class ApplianceHistoryTCNForecaster(nn.Module):
             decoded.append(self.heads[index](context, future_time))
         z_app = torch.stack(contexts, dim=1)
         return _format_tcn_outputs(
-            torch.stack(decoded, dim=1), self.rated_power, z_app
+            torch.stack(decoded, dim=1), self.rated_power, z_app,
+            getattr(self, "power_cap_mode", "legacy"),
+            getattr(self, "state_gate_floor", 0.01)
         )
 
 
@@ -308,8 +321,10 @@ class AggregateOnlySeq2SeqBaseline(nn.Module):
     """
     Lightweight aggregate-only seq2seq baseline.
 
-    It consumes the same aggregate-history input as PCSA, without an
-    appliance-history reconstruction stage or appliance queries.
+    It consumes the same x_hist tensor as PISA, but has no NILM bridge,
+    appliance queries, or appliance-specific historical reconstruction.
+    Use this as a sanity-check baseline: PISA should beat this model on
+    appliance-level power, state, and event metrics.
     """
 
     def __init__(
@@ -470,7 +485,12 @@ class HistoricalNILMSeq2Seq(nn.Module):
         power_raw = self.power_head(z).transpose(1, 2)
         state_logits = self.state_head(z).transpose(1, 2)
         p_on = torch.sigmoid(state_logits)
-        past_power = torch.minimum(F.softplus(power_raw) * p_on, self.rated_power)
+        if getattr(self, "power_cap_mode", "legacy") == "legacy":
+            past_power = torch.minimum(F.softplus(power_raw) * p_on, self.rated_power)
+        else:
+            amplitude = cap_amplitude(F.softplus(power_raw), self.rated_power, self.power_cap_mode)
+            floor = getattr(self, "state_gate_floor", 0.01)
+            past_power = amplitude * (floor + (1 - floor) * p_on)
 
         return {
             "past_power": past_power,

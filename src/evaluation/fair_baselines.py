@@ -1,7 +1,10 @@
 """Causal, aggregate-only baselines for Home 7951 forecasting experiments.
 
-These baselines use aggregate history at inference. Training labels estimate
-fixed parameters, and validation labels select operating thresholds.
+The helpers in this module deliberately do not consume historical appliance
+submeter labels at inference time.  Training labels are used only to estimate
+fixed parameters on the training split, and validation labels only to select
+operating thresholds.  This keeps the resulting comparison suitable for the
+future-forecasting PISA setting.
 """
 
 from __future__ import annotations
@@ -34,7 +37,9 @@ def estimate_training_appliance_shares(train_dataset) -> Tensor:
     mean_mains = max(float(np.mean(np.clip(mains, 0.0, None))), 1e-8)
     shares = np.mean(np.clip(appliance_power, 0.0, None), axis=0) / mean_mains
     shares = np.clip(shares, 0.0, None)
-    # Preserve unmodeled aggregate load; normalize only when shares exceed 1.
+    # Selected appliances may not account for all aggregate load.  Do not
+    # normalize upward in that case; the unallocated fraction represents
+    # unmodelled loads.  Guard only against inconsistent measurements > mains.
     if float(shares.sum()) > 1.0:
         shares = shares / float(shares.sum())
     return torch.tensor(shares, dtype=torch.float32)

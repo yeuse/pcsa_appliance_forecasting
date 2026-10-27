@@ -1,0 +1,33 @@
+{
+  "runtime": {
+    "python": "3.11.11",
+    "torch": "2.2.2+cpu",
+    "device": "cpu"
+  },
+  "cli_help_passed": [
+    "training.run",
+    "training.history_pretrain",
+    "training.history_sequential",
+    "training.formal_evaluate",
+    "training.diagnose",
+    "training.history_input_ablation",
+    "scripts/train_pcsa_component_ablation.py",
+    "scripts/prepare_austin_sep_four_homes.py"
+  ],
+  "models_compared": [
+    "pcsa",
+    "aggregate",
+    "two_stage"
+  ],
+  "seeds": [
+    7,
+    42,
+    123
+  ],
+  "exact_output_match": true,
+  "model_and_data_sources_unchanged": true,
+  "original_result_records_unchanged": true,
+  "active_naming_scan_passed": true,
+  "homepage_and_guide_links_passed": true,
+  "full_training_rerun": false
+}

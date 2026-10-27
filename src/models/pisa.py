@@ -1,3 +1,5 @@
+# src/pisa/models/pisa.py
+
 from __future__ import annotations
 
 from typing import Any, Optional
@@ -6,6 +8,8 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from torch import Tensor
+
+from .power_output import cap_amplitude
 
 from .blocks import (
     ApplianceQueryStateBridge,
@@ -32,8 +36,9 @@ DEFAULT_APPLIANCE_TYPES = {
     "microwave1": "sparse_event",
 }
 
-# Rated-power caps are in kW. Record run-specific values in the configuration;
-# defaults must not be treated as estimates from a test split.
+# Rated-power caps are in kW and are deliberately conservative relative to
+# the observed Home 7951 maxima.  They must be recorded with every experiment
+# rather than being inferred from the test split.
 DEFAULT_RATED_POWER_KW = {
     "air1": 3.0,
     "refrigerator1": 0.5,
@@ -748,6 +753,7 @@ class PISAModel(nn.Module):
         residual_tcn_target_adapter_dim: int = 0,
         future_base_blend_init: float = 2.0,
         target_output_calibration: bool = False,
+        power_cap_mode: str = "hard",
     ):
         super().__init__()
 
@@ -797,6 +803,7 @@ class PISAModel(nn.Module):
         self.residual_tcn_target_adapter_dim = int(
             residual_tcn_target_adapter_dim
         )
+        self.power_cap_mode = power_cap_mode
         self.target_output_calibration = bool(target_output_calibration)
         self._history_reconstruction_only_training = False
         self._future_residual_only_training = False
@@ -1201,6 +1208,9 @@ class PISAModel(nn.Module):
             self.risk_adapters.train(True)
         return self
 
+    def _cap_amplitude(self, amplitude: Tensor, cap: Tensor) -> Tensor:
+        return cap_amplitude(amplitude, cap, self.power_cap_mode)
+
     def _init_parameters(self) -> None:
         for name, param in self.named_parameters():
             if param.dim() <= 1:
@@ -1488,7 +1498,7 @@ class PISAModel(nn.Module):
         )
 
         uncapped_amplitude_power = F.softplus(y_raw)
-        amplitude_power = torch.minimum(
+        amplitude_power = self._cap_amplitude(
             uncapped_amplitude_power,
             self.constraint.rated_power,
         )
@@ -1797,7 +1807,7 @@ class PISAModel(nn.Module):
             if past_refined_out is not None
             else past_recon_out["past_state_logits"]
         )
-        out["past_reconstructed_power"] = torch.minimum(
+        out["past_reconstructed_power"] = self._cap_amplitude(
             deployment_past_power,
             self.constraint.rated_power,
         )
@@ -1813,7 +1823,7 @@ class PISAModel(nn.Module):
                 ]
                 tcn_past_p_on = out["past_reconstructed_p_on"]
             else:
-                tcn_past_power = torch.minimum(
+                tcn_past_power = self._cap_amplitude(
                     past_recon_out["past_power"],
                     self.constraint.rated_power,
                 )
@@ -1848,8 +1858,13 @@ class PISAModel(nn.Module):
                     "future_tcn_state_residual_logits"
                 ]
             else:
-                # Blend the direct decoder with the complete gated TCN forecast
-                # so this optional route retains the source residual model.
+                # The learned direct decoder is an optional extension of the
+                # already-trained gated residual TCN.  Its base route must
+                # therefore be the complete legacy TCN forecast, not the core
+                # PISA decoder that precedes that TCN.  Blending against the
+                # core decoder silently bypassed the source TCN and made a
+                # nominally base-only counterfactual regress from 0.06044 to
+                # the pre-TCN 0.06496 validation MAE.
                 legacy_tcn_y_raw = (
                     base_y_raw
                     + residual_out["future_tcn_power_gate"]
@@ -1918,14 +1933,16 @@ class PISAModel(nn.Module):
                         fused_amplitude_uncalibrated.clamp_min(1e-6)
                     ).clamp_min(1e-8)
                 )
-                # Keep the source state route when blending power forecasts.
+                # Event/state forecasting is deliberately de-emphasized.  The
+                # enhanced power decoder must not perturb the validated source
+                # state route or flip hard state thresholds.
                 fused_state_logits = legacy_tcn_state_logits
             fused_constraint = self.constraint(
                 y_raw=fused_y_raw,
                 state_logits=fused_state_logits,
             )
             if self.future_residual_fusion != "learned_blend":
-                fused_amplitude_uncalibrated = torch.minimum(
+                fused_amplitude_uncalibrated = self._cap_amplitude(
                     F.softplus(fused_y_raw),
                     self.constraint.rated_power,
                 )
@@ -2129,6 +2146,7 @@ def build_pisa_model_from_config(cfg: dict[str, Any]) -> PISAModel:
         )
 
     return PISAModel(
+        power_cap_mode=str(model_cfg.get("power_cap_mode", "hard")),
         input_dim=int(input_dim),
         num_appliances=int(num_appliances),
         horizon=int(model_cfg.get("horizon", 30)),

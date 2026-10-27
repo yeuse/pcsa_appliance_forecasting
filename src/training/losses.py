@@ -1,3 +1,5 @@
+# src/training/losses.py
+
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -651,8 +653,8 @@ class PISALoss(nn.Module):
         """
         Aggregate consistency loss.
 
-        Selected appliances may account for only part of household demand, so
-        their predicted sum is not constrained to equal aggregate demand.
+        Since the selected appliances are not necessarily all household loads,
+        we should not force sum(pred_appliance) == grid.
 
         Default mode:
             upper_bound:
@@ -693,6 +695,9 @@ class PISALoss(nn.Module):
                 dtype=pred_power.dtype,
             ).sum(dim=1)
 
+            if "event_mask" in batch and "target_mask" in batch:
+                complete = (batch["target_mask"] > 0.5).all(dim=1)
+                return masked_mean(torch.abs(pred_sum - target_sum), complete)
             return F.l1_loss(pred_sum, target_sum)
 
         raise ValueError(f"Unsupported aggregate_mode: {mode}")
@@ -969,10 +974,19 @@ class PISALoss(nn.Module):
             pos_weight=self.state_pos_weight,
         )
 
+        event_mask = batch.get("event_mask", target_mask)
+        if "event_mask" in batch:
+            # Hierarchical window/duration targets need a separate censored-
+            # label policy. Fail closed rather than use filled labels.
+            unsupported = ("lambda_bucket_start", "lambda_bucket_stop", "lambda_event_offset",
+                           "lambda_window_start", "lambda_conditional_bucket", "lambda_conditional_offset",
+                           "lambda_conditional_power", "lambda_pulse_duration", "lambda_pulse_amplitude")
+            if any(getattr(self.cfg, key, 0) != 0 for key in unsupported):
+                raise ValueError("partial_train_labels does not support hierarchical/bucket/pulse losses")
         loss_event = self._classification_loss(
             logits=out["event_logits"],
             targets=y_event,
-            mask=target_mask,
+            mask=event_mask,
             loss_type=self.cfg.event_loss_type,
             alpha=self.event_alpha,
             pos_weight=self.event_pos_weight,
@@ -983,7 +997,7 @@ class PISALoss(nn.Module):
             loss_start = self._classification_loss(
                 logits=out["start_logits"],
                 targets=y_start,
-                mask=target_mask,
+                mask=event_mask,
                 loss_type=self.cfg.event_loss_type,
                 alpha=self.event_alpha,
                 pos_weight=self.event_pos_weight,
@@ -994,7 +1008,7 @@ class PISALoss(nn.Module):
             loss_stop = self._classification_loss(
                 logits=out["stop_logits"],
                 targets=y_stop,
-                mask=target_mask,
+                mask=event_mask,
                 loss_type=self.cfg.event_loss_type,
                 alpha=self.stop_alpha,
                 pos_weight=self.event_pos_weight,

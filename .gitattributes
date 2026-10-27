@@ -1,3 +1,10 @@
-
-# Preserve exact frozen source and record hashes across platforms.
-pcsa/** -text
+# Preserve source and record bytes across operating systems.
+src/** -text
+training/** -text
+scripts/** -text
+records/** -text
+docs/** -text
+README.md -text
+requirements.txt -text
+.gitignore -text
+.gitattributes -text

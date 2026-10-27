@@ -4,7 +4,7 @@ Research implementation for **PCSA: Constraint aware residential appliance power
 
 PCSA predicts the next **30 minutes** of appliance power from **120 minutes** of net-grid history and calendar features. It combines historical appliance reconstruction, appliance-conditioned forecasting and separate causal TCN residual corrections. Appliance measurements supervise training and adaptation; deployment uses net-grid and calendar inputs.
 
-[Architecture](#architecture) · [Results](#results) · [Training and evaluation](docs/PCSA_GUIDE.md) · [Experiment records](pcsa/records)
+[Architecture](#architecture) · [Results](#results) · [Training and evaluation](docs/PCSA_GUIDE.md) · [Experiment records](records)
 
 ## Architecture
 
@@ -80,8 +80,22 @@ See the **[PCSA implementation guide](docs/PCSA_GUIDE.md)** for the code layout,
 
 ## Scope and reproducibility
 
-The published source is verified against the formal experiment's SHA256 manifest. Complete metrics, target-label budgets, training costs, checkpoint provenance and component diagnostics are provided in the [experiment records](pcsa/records).
+The public package reorganizes the evaluated implementation without changing model definitions, losses or data preparation. The original experiment manifest and a source migration map are retained in `records/`. Complete metrics, target-label budgets, training costs, checkpoint provenance and component diagnostics are provided in the [experiment records](records).
 
 Source caps were chosen after inspection of the source month, including eventual test dates, and earlier test outputs were inspected during development. Net-grid filtering affects retained coverage. Results are a retrospective fixed-protocol comparison; event recognition and operational HEMS benefits are not established.
 
-The `pcsa/` directory contains the implementation supporting the current results. Root-level legacy code and [earlier documentation](README_R2_ARCHIVE.md) remain available for historical comparison. The manuscript cites commit `213f6a57a363d07303eb8c4dcbaac3468517a155`; that fixed historical link remains valid after the public directory rename. The experiment source files are unchanged.
+## Repository layout
+
+```text
+src/          Model architecture, data loaders and losses
+training/     Training, evaluation and experiment protocol
+scripts/      Data preparation and component ablations
+records/      Paper results and reproducibility records
+docs/         Setup, commands and provenance notes
+figures/      Architecture and forecasting examples
+archive/      Previous implementation, for historical reference
+```
+
+Run commands from the repository root. The current implementation is in `src/`, `training/` and `scripts/`. The previous implementation is isolated under `archive/previous_implementation/` and is not imported by the current workflow.
+
+Use the repository homepage for the project and the [`paper-results` tag](https://github.com/yeuse/pcsa_appliance_forecasting/tree/paper-results) to identify the published code layout. See [provenance notes](docs/PROVENANCE.md) for the relationship between this package and the original experiment snapshot.

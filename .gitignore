@@ -3,20 +3,13 @@ __pycache__/
 .venv/
 .env
 .env.*
-data/
-outputs/
-logs/
-archive/
+/data/
+/outputs/
+/logs/
 *.pt
 *.pth
 *.ckpt
 *.zip
 *.log
 .DS_Store
-
-# Experiment metadata-only archives
-!pcsa/records/*.zip
-
-# Data-loader source is code, not household data.
-!pcsa/src/data/
-!pcsa/src/data/*.py
+!/records/*.zip

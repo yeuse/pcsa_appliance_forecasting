@@ -58,6 +58,7 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument("--input-window", type=int, default=120)
     parser.add_argument("--horizon", type=int, default=30)
+    parser.add_argument("--window-rule", choices=["history_only", "history_and_future"], default="history_and_future")
     return parser.parse_args()
 
 
@@ -270,6 +271,7 @@ def usable_windows(
     target_available: np.ndarray,
     input_window: int,
     horizon: int,
+    require_future_mains: bool = True,
 ) -> int:
     total = len(grid_available) - input_window - horizon + 1
     if total <= 0:
@@ -278,10 +280,8 @@ def usable_windows(
     target_rows = target_available.all(axis=1)
     target_prefix = np.concatenate(([0], np.cumsum(target_rows, dtype=np.int64)))
     starts = np.arange(total)
-    grid_window_ok = (
-        grid_prefix[starts + input_window + horizon] - grid_prefix[starts]
-        == input_window + horizon
-    )
+    grid_length = input_window + (horizon if require_future_mains else 0)
+    grid_window_ok = (grid_prefix[starts + grid_length] - grid_prefix[starts] == grid_length)
     target_start = starts + input_window
     future_ok = target_prefix[target_start + horizon] - target_prefix[target_start] == horizon
     return int(np.count_nonzero(grid_window_ok & future_ok))
@@ -335,6 +335,7 @@ def audit_output(
     frame: pd.DataFrame,
     input_window: int,
     horizon: int,
+    require_future_mains: bool = True,
 ) -> dict[str, object]:
     dataid = str(frame["dataid"].iloc[0])
     audit: dict[str, object] = {
@@ -352,6 +353,7 @@ def audit_output(
             frame.loc[mask, [f"{app}_available" for app in APPLIANCES]].to_numpy(dtype=bool),
             input_window,
             horizon,
+            require_future_mains=require_future_mains,
         )
         for appliance in APPLIANCES:
             values = frame.loc[mask, appliance].to_numpy(dtype=float)
@@ -395,13 +397,14 @@ def main() -> None:
             index=False,
         )
         prepared_frames.append(prepared)
-        audits.append(audit_output(prepared, args.input_window, args.horizon))
+        audits.append(audit_output(prepared, args.input_window, args.horizon, args.window_rule == "history_and_future"))
 
     combined = pd.concat(prepared_frames, ignore_index=True)
     combined.to_csv(args.output_dir / "selected_4homes_2018_sep_1min.csv", index=False)
     audit = pd.DataFrame(audits)
     audit.to_csv(args.output_dir / "quality_audit.csv", index=False)
     protocol = {
+        "window_rule": args.window_rule,
         "homes": HOMES,
         "pv_metadata": {
             home: str(metadata.loc[home].get("pv", "")).strip().lower() == "yes"
@@ -419,7 +422,8 @@ def main() -> None:
             "second invalidates its minute because it indicates net export. For an "
             "appliance channel, the minute remains available only if at least the "
             "configured number of nonnegative seconds remain. Sliding windows "
-            "containing an unavailable grid-history minute are excluded."
+            "containing an unavailable grid-history minute are excluded. Future grid "
+            "availability is required only under window_rule=history_and_future."
         ),
         "source_files": {
             **{home: str(args.minute_csv.resolve()) for home in MINUTE_HOMES},

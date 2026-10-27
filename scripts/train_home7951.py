@@ -1,3 +1,5 @@
+# scripts/train_home7951.py
+
 from __future__ import annotations
 
 import argparse
@@ -92,8 +94,9 @@ RISK_LOSS_ARGUMENTS = (
 
 CORE_MAE_MONITOR = "val/regression/macro_avg/MAE"
 BASELINE_ZERO_MAE = "baseline_zero/regression/macro_avg/MAE"
-# This diagnostic reference uses measured appliance history, which is
-# unavailable to the deployed aggregate-only forecasting route.
+# This reference consumes y_hist_power (historical appliance submeters), which
+# is not available to an aggregate-only deployed PISA model. Keep it for
+# diagnostic reporting, but never use it as a training-stage admission gate.
 PERSISTENCE_ORACLE_MAE = "baseline_persistence/regression/macro_avg/MAE"
 # The risk stage is a one-start-per-window forecasting task.  Selecting it by
 # the raw bidirectional event head rewards a different, noisier decision rule.
@@ -667,6 +670,8 @@ def parse_args() -> argparse.Namespace:
         ),
     )
     parser.add_argument("--stride", type=int, default=1)
+    parser.add_argument("--partial_train_labels", action="store_true",
+                        help="Train-only pointwise appliance masks; val/test retain strict windows.")
     parser.add_argument(
         "--appliance_scale_mode", default="p99_positive",
         choices=["p99_positive", "p99_on", "none"],
@@ -808,6 +813,14 @@ def parse_args() -> argparse.Namespace:
         help=(
             "Preferred alias for --use_refined_history_residual_tcn. With "
             "--residual_tcn_history_source base, no history refiner is required."
+        ),
+    )
+    parser.add_argument(
+        "--ablation_no_tcn",
+        action="store_true",
+        help=(
+            "Explicitly keep the future residual-TCN disabled when an init "
+            "checkpoint contains TCN weights. Used only for the no-TCN ablation."
         ),
     )
     parser.add_argument("--residual_tcn_hidden_dim", type=int, default=128)
@@ -1027,6 +1040,12 @@ def parse_args() -> argparse.Namespace:
 
     # Optimization
     parser.add_argument("--epochs", type=int, default=80)
+    parser.add_argument("--scheduler_start_epoch", type=int, default=1)
+    parser.add_argument("--include_initial_candidate", action="store_true")
+    parser.add_argument("--gate_reference_initial", type=str, default=None,
+                        help="Verify gate=0 initialization against an epoch-zero gate=-3 checkpoint; never load it for training.")
+    parser.add_argument("--train_steps_per_epoch", type=int, default=None,
+                        help="Limit each shuffled training pass; validate after this many batches.")
     parser.add_argument("--lr", type=float, default=5e-5)
     parser.add_argument("--weight_decay", type=float, default=1e-4)
     parser.add_argument("--grad_clip_norm", type=float, default=1.0)
@@ -1547,7 +1566,14 @@ def apply_checkpoint_architecture_args(args: argparse.Namespace) -> None:
                     "target_output_calibration": "target_output_calibration",
                 }
             )
+        # Explicit component-ablation switches must survive reconstruction of
+        # the frozen source route.  Both switches default to the full-model
+        # setting, so their ablation values unambiguously indicate intent.
+        explicit_no_state_gate = not args.state_conditioned_power
+        explicit_no_rated_cap = args.disable_rated_power_cap
         for config_name, arg_name in model_arg_map.items():
+            if config_name == "state_conditioned_power" and explicit_no_state_gate:
+                continue
             if config_name in source_model:
                 setattr(args, arg_name, source_model[config_name])
 
@@ -1570,9 +1596,18 @@ def apply_checkpoint_architecture_args(args: argparse.Namespace) -> None:
         )
         if isinstance(rated_power, list) and rated_power:
             args.rated_power_kw = [float(value) for value in rated_power]
-        args.disable_rated_power_cap = not bool(
-            source_data.get("rated_power_cap_enabled", True)
-        )
+        if not explicit_no_rated_cap:
+            args.disable_rated_power_cap = not bool(
+                source_data.get("rated_power_cap_enabled", True)
+            )
+        if explicit_no_state_gate:
+            print(
+                "Component ablation override: state-conditioned power disabled."
+            )
+        if explicit_no_rated_cap:
+            print(
+                "Component ablation override: rated-power cap disabled."
+            )
         print(
             "Frozen deterministic-route config restored from source run: "
             f"{source_config_path}"
@@ -1581,7 +1616,7 @@ def apply_checkpoint_architecture_args(args: argparse.Namespace) -> None:
     inferred = infer_optional_pisa_architecture(state_dict)
     if inferred.get("use_history_recon_refiner"):
         args.use_history_recon_refiner = True
-    if inferred.get("use_refined_history_residual_tcn"):
+    if inferred.get("use_refined_history_residual_tcn") and not args.ablation_no_tcn:
         args.use_refined_history_residual_tcn = True
         for name in (
             "residual_tcn_hidden_dim",
@@ -2335,6 +2370,7 @@ def main() -> None:
             "target_mode": args.target_mode,
             "stride": args.stride,
             "appliance_scale_mode": args.appliance_scale_mode,
+            "partial_train_labels": args.partial_train_labels,
             "num_workers": args.num_workers,
             "sampler_mode": args.sampler_mode,
             "home_balanced_sampling": args.home_balanced_sampling,
@@ -2408,6 +2444,9 @@ def main() -> None:
         },
         "optimization": {
             "epochs": args.epochs,
+            "train_steps_per_epoch": args.train_steps_per_epoch,
+            "include_initial_candidate": args.include_initial_candidate,
+            "gate_reference_initial": args.gate_reference_initial,
             "lr": args.lr,
             "weight_decay": args.weight_decay,
             "grad_clip_norm": args.grad_clip_norm,
@@ -2497,7 +2536,7 @@ def main() -> None:
             "scheduler_start_epoch": (
                 risk_checkpoint_start_epoch
                 if args.training_stage == "risk_finetune"
-                else 1
+                else args.scheduler_start_epoch
             ),
             "source_on_monitor_weight": args.source_on_monitor_weight,
             "source_on_safety_ceiling": args.source_on_safety_ceiling,
@@ -2534,6 +2573,10 @@ def main() -> None:
         "microwave1": 0.10,
     }
     source_home_loaders: dict[str, dict[str, DataLoader]] = {}
+    if args.partial_train_labels and len(source_csv_paths) > 1:
+        raise ValueError("partial_train_labels currently supports single-source runs only")
+    if args.partial_train_labels and args.sampler_mode != "none":
+        raise ValueError("partial_train_labels requires --sampler_mode none; use it in both control and treatment runs")
     if len(source_csv_paths) > 1:
         loaders, bundle, source_home_loaders = build_multi_home_dataloaders(
             csv_paths=source_csv_paths,
@@ -2553,6 +2596,7 @@ def main() -> None:
     else:
         loaders, bundle = build_single_home_dataloaders(
             csv_path=csv_path,
+            partial_train_labels=args.partial_train_labels,
             appliance_scale_mode=args.appliance_scale_mode,
             batch_size=args.batch_size,
             input_window=args.input_window,
@@ -2877,6 +2921,8 @@ def main() -> None:
     # -----------------------------------------------------------------
     trainer_config = TrainerConfig(
         max_epochs=args.epochs,
+        train_steps_per_epoch=args.train_steps_per_epoch,
+        include_initial_candidate=args.include_initial_candidate,
         device=args.device,
         seed=args.seed,
         use_amp=not args.no_amp,
@@ -2911,7 +2957,7 @@ def main() -> None:
         scheduler_start_epoch=(
             risk_checkpoint_start_epoch
             if args.training_stage == "risk_finetune"
-            else 1
+            else args.scheduler_start_epoch
         ),
         event_tolerance_minutes=args.event_tolerance_minutes,
         event_bucket_size=args.event_bucket_size,
@@ -2939,6 +2985,12 @@ def main() -> None:
         appliance_names=appliance_cols,
         state_thresholds=bundle.state_thresholds,
     )
+
+    if args.gate_reference_initial is not None:
+        from scripts.verify_gate_initialization import verify_initial_predictions
+        gate_audit = verify_initial_predictions(model, loaders["val"], args.gate_reference_initial, trainer.device)
+        save_json(result_dir / "gate_initial_comparison.json", gate_audit)
+        print("Gate-only initialization comparison passed:", gate_audit)
 
     if args.train_mode == "future_residual_tcn" and not args.evaluate_only:
         initialization_label = (

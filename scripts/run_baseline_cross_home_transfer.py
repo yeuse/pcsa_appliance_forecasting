@@ -50,6 +50,8 @@ def parse_args() -> argparse.Namespace:
         description="Frozen Aggregate-TCN and Seq2Seq-NILM->TCN cross-home transfer."
     )
     parser.add_argument("--source_csv", required=True)
+    parser.add_argument("--partial_train_labels", action="store_true",
+                        help="Train-only pointwise appliance masks; val/test remain strict.")
     parser.add_argument("--target_csv", required=True)
     parser.add_argument("--source_run_dir", required=True)
     parser.add_argument("--output_dir", required=True)
@@ -459,6 +461,7 @@ def main() -> None:
     )
     target_datasets, target_bundle = build_single_home_datasets(
         csv_path=args.target_csv,
+        partial_train_labels=args.partial_train_labels,
         input_cols=INPUT_COLS,
         appliance_cols=APPLIANCES,
         input_window=args.input_window,

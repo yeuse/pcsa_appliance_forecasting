@@ -1,3 +1,5 @@
+# src/training/__init__.py
+
 from .losses import (
     PISALoss,
     PISALossConfig,

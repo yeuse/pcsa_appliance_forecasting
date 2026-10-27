@@ -1,0 +1,397 @@
+{
+  "original_commit": "e82f38659ddd142f06451e46c36c6e50ab421a8f",
+  "files": [
+    {
+      "original_path": "pcsa/README.md",
+      "current_path": "docs/RUNNING.md",
+      "original_sha256": "880ad3e37c940e99a61731966261b3e5e2c8f572c283e7b2e1c4793fb73f3d7a",
+      "current_sha256": "85061a743bbafccca6ec5a659455a9746bb5a80c8f643f21aacab1420c60f8a7",
+      "unchanged": false
+    },
+    {
+      "original_path": "pcsa/RELEASE_SHA256.json",
+      "current_path": "records/original_release_sha256.json",
+      "original_sha256": "56b16560cf4a2b81a0676f51089a902748aa8c86fa36ed791c79b2b613e02678",
+      "current_sha256": "56b16560cf4a2b81a0676f51089a902748aa8c86fa36ed791c79b2b613e02678",
+      "unchanged": true
+    },
+    {
+      "original_path": "pcsa/records/ablation_comparison.csv",
+      "current_path": "records/ablation_comparison.csv",
+      "original_sha256": "e062231f34d0f478cc5b09d8718676f14e6f0a9fe5e58ced071840cf179dd219",
+      "current_sha256": "e062231f34d0f478cc5b09d8718676f14e6f0a9fe5e58ced071840cf179dd219",
+      "unchanged": true
+    },
+    {
+      "original_path": "pcsa/records/ablation_protocol.json",
+      "current_path": "records/ablation_protocol.json",
+      "original_sha256": "207a648f8dd9dbe30be6e5f5c9c01aad9151e2f67c2cd5975e3bd50ce8ef9d0e",
+      "current_sha256": "207a648f8dd9dbe30be6e5f5c9c01aad9151e2f67c2cd5975e3bd50ce8ef9d0e",
+      "unchanged": true
+    },
+    {
+      "original_path": "pcsa/records/ablation_results_summary.json",
+      "current_path": "records/ablation_results_summary.json",
+      "original_sha256": "243f64006ed21563a71c1a5cb3952806b4ce7be98b36139abc8a182727b31cc1",
+      "current_sha256": "243f64006ed21563a71c1a5cb3952806b4ce7be98b36139abc8a182727b31cc1",
+      "unchanged": true
+    },
+    {
+      "original_path": "pcsa/records/component_ablation_records.zip",
+      "current_path": "records/component_ablation_records.zip",
+      "original_sha256": "4db94f7c05237a4c82bdaa29986af5f62ff4ff404144e558291e3c066870bf35",
+      "current_sha256": "4db94f7c05237a4c82bdaa29986af5f62ff4ff404144e558291e3c066870bf35",
+      "unchanged": true
+    },
+    {
+      "original_path": "pcsa/records/formal_environment.json",
+      "current_path": "records/formal_environment.json",
+      "original_sha256": "18ddfbfbfd99d6eb6d7873d9cabe4b61f4e779a4689e31c023bf10723a7cf637",
+      "current_sha256": "18ddfbfbfd99d6eb6d7873d9cabe4b61f4e779a4689e31c023bf10723a7cf637",
+      "unchanged": true
+    },
+    {
+      "original_path": "pcsa/records/formal_evaluation_records.zip",
+      "current_path": "records/formal_evaluation_records.zip",
+      "original_sha256": "3ba0fc0149d2eea0d8e9fa821b4e11367e741727181c2a155e75d3c8e0fe6bb7",
+      "current_sha256": "3ba0fc0149d2eea0d8e9fa821b4e11367e741727181c2a155e75d3c8e0fe6bb7",
+      "unchanged": true
+    },
+    {
+      "original_path": "pcsa/records/formal_manifest.json",
+      "current_path": "records/formal_manifest.json",
+      "original_sha256": "ef2032b12522e3dd892c3b89029903d15d8e7012efb478f78348a2d38122132f",
+      "current_sha256": "ef2032b12522e3dd892c3b89029903d15d8e7012efb478f78348a2d38122132f",
+      "unchanged": true
+    },
+    {
+      "original_path": "pcsa/records/formal_protocol.json",
+      "current_path": "records/formal_protocol.json",
+      "original_sha256": "aae1e8389bc004d3bf521e89ba2acaa9a97d53cdb7b4aef8f4d6a9245d9d1a3b",
+      "current_sha256": "aae1e8389bc004d3bf521e89ba2acaa9a97d53cdb7b4aef8f4d6a9245d9d1a3b",
+      "unchanged": true
+    },
+    {
+      "original_path": "pcsa/records/formal_results_by_seed.csv",
+      "current_path": "records/formal_results_by_seed.csv",
+      "original_sha256": "094527dcc75aaab71f2660765145ee5fee6b3c70249658b40bad26185b874f51",
+      "current_sha256": "094527dcc75aaab71f2660765145ee5fee6b3c70249658b40bad26185b874f51",
+      "unchanged": true
+    },
+    {
+      "original_path": "pcsa/records/formal_results_summary.csv",
+      "current_path": "records/formal_results_summary.csv",
+      "original_sha256": "d0f5ef4fb225d16b42b389ad451c6f97cfe2d2f48a936451db592fd22783eb47",
+      "current_sha256": "d0f5ef4fb225d16b42b389ad451c6f97cfe2d2f48a936451db592fd22783eb47",
+      "unchanged": true
+    },
+    {
+      "original_path": "pcsa/records/formal_source_label_budget.json",
+      "current_path": "records/formal_source_label_budget.json",
+      "original_sha256": "3fa012904ea8e7eb5887f93319291dd84b4b6aa863f961806072a004387039c0",
+      "current_sha256": "3fa012904ea8e7eb5887f93319291dd84b4b6aa863f961806072a004387039c0",
+      "unchanged": true
+    },
+    {
+      "original_path": "pcsa/records/formal_source_training_provenance.json",
+      "current_path": "records/formal_source_training_provenance.json",
+      "original_sha256": "784c8e620724c7225d290116754757429f7ca0fbe4a9a95a49575cc574f26edd",
+      "current_sha256": "784c8e620724c7225d290116754757429f7ca0fbe4a9a95a49575cc574f26edd",
+      "unchanged": true
+    },
+    {
+      "original_path": "pcsa/records/history_pretrain_records.zip",
+      "current_path": "records/history_pretrain_records.zip",
+      "original_sha256": "ee1b0dfe79654457a8d6bda4d6ceeba6bc5dc0636dcfe3be2638259fe7d76215",
+      "current_sha256": "ee1b0dfe79654457a8d6bda4d6ceeba6bc5dc0636dcfe3be2638259fe7d76215",
+      "unchanged": true
+    },
+    {
+      "original_path": "pcsa/records/history_sequential_records.zip",
+      "current_path": "records/history_sequential_records.zip",
+      "original_sha256": "de491285708cd6859fa2b1e71816812eff6396275f6b565f84aa3837ab538f5d",
+      "current_sha256": "de491285708cd6859fa2b1e71816812eff6396275f6b565f84aa3837ab538f5d",
+      "unchanged": true
+    },
+    {
+      "original_path": "pcsa/retraining_v3/DIAGNOSTICS.md",
+      "current_path": "training/DIAGNOSTICS.md",
+      "original_sha256": "e4ebc494b9711071b44784546679bbe110837e4d14c71fbcb7615a9ff4bff64a",
+      "current_sha256": "77b69553fce7b48e909f8c8631e7fd3dcbb6898d70b8abf75e4e0742517c7255",
+      "unchanged": false
+    },
+    {
+      "original_path": "pcsa/retraining_v3/HISTORY_INPUT_ABLATION.md",
+      "current_path": "training/HISTORY_INPUT_ABLATION.md",
+      "original_sha256": "c1b9c193a22e5693967d0aa6a61edcc80432d2f977612ac5661880bfbe02b008",
+      "current_sha256": "a03f58317087c555a7c999ab2727f787dfd9238fc3f9b3a46d7f2a642b115802",
+      "unchanged": false
+    },
+    {
+      "original_path": "pcsa/retraining_v3/HISTORY_PRETRAIN.md",
+      "current_path": "training/HISTORY_PRETRAIN.md",
+      "original_sha256": "821e6d1112cdaca0b392739f411b1588b4a4751b3ffeb5d99a6caec9d895ab0e",
+      "current_sha256": "3f747aa10545b938ec2b52094b80f563774739986d5b8a5652266159a4bd558f",
+      "unchanged": false
+    },
+    {
+      "original_path": "pcsa/retraining_v3/HISTORY_SEQUENTIAL.md",
+      "current_path": "training/HISTORY_SEQUENTIAL.md",
+      "original_sha256": "428a6836d8e87b9aa93eb4ce8c05ecde42c0d46f7cc34860c346c94bdf4589b8",
+      "current_sha256": "3effa584d8510b04e56598c85f62c1e7777da54bed3b78e3c0a835e22c8adeee",
+      "unchanged": false
+    },
+    {
+      "original_path": "pcsa/retraining_v3/README.md",
+      "current_path": "training/README.md",
+      "original_sha256": "d8197bfad75b10d1a22a7147d5382c0be99ca1a9256c479cdf2a3f36ab95bfa5",
+      "current_sha256": "1e8cfbf276146c9229e363746d447d71274c714ed0a219feccf547fc4d76577d",
+      "unchanged": false
+    },
+    {
+      "original_path": "pcsa/retraining_v3/__init__.py",
+      "current_path": "training/__init__.py",
+      "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "current_sha256": "4049a4f8d049ff38158ea23b137f1ef7db74650a4c2f35c023ac5efcc927259c",
+      "unchanged": false
+    },
+    {
+      "original_path": "pcsa/retraining_v3/common.py",
+      "current_path": "training/common.py",
+      "original_sha256": "20cd9809093bbf2f2efcc78dfd745a8011b32b1213bcb94921dba97709c8c939",
+      "current_sha256": "efbc3f71866aa5490e87132e0a6a1a772b841661d12ab9b0209767216a7efa26",
+      "unchanged": false
+    },
+    {
+      "original_path": "pcsa/retraining_v3/diagnose.py",
+      "current_path": "training/diagnose.py",
+      "original_sha256": "3f10e44f71587645a4572f9a6c02be4dcf1be2079fa3e470698266920e2bc1db",
+      "current_sha256": "7045ffddac7742476ca8540f8132be945f703672e25db539f23d55e77fec4647",
+      "unchanged": false
+    },
+    {
+      "original_path": "pcsa/retraining_v3/diagnostics.py",
+      "current_path": "training/diagnostics.py",
+      "original_sha256": "21e7f1b46d963361f585bdf802cc0a3e8416de0d1d2c067060730c4bd59ca435",
+      "current_sha256": "9d5f5d449e1402e271ed0ebb7853748e80770d897b4f1abdcd0c3b9a5d0ca69d",
+      "unchanged": false
+    },
+    {
+      "original_path": "pcsa/retraining_v3/formal_evaluate.py",
+      "current_path": "training/formal_evaluate.py",
+      "original_sha256": "cb51709094ac99e6a038b14d4101cf92197b6f2b9912922c1eeb36ae4ebbf25f",
+      "current_sha256": "ea96c6ab7305cacbfdf07f161a842719b99984dcb7d47142bdfbd10f4a18f3ad",
+      "unchanged": false
+    },
+    {
+      "original_path": "pcsa/retraining_v3/history_input_ablation.py",
+      "current_path": "training/history_input_ablation.py",
+      "original_sha256": "03b338b91dae555bad340755f7a956ef444cae4e5c25799d72bba6f7ca3d5392",
+      "current_sha256": "1b7a8484108cd2980ddd0e92bf0008b9bf8dbc8619bfa8af3c297565c3af4c32",
+      "unchanged": false
+    },
+    {
+      "original_path": "pcsa/retraining_v3/history_pretrain.py",
+      "current_path": "training/history_pretrain.py",
+      "original_sha256": "2a83bafa78638d2a120953e7b32a0a22a7abbbffe4b57bcf6371ac023448de84",
+      "current_sha256": "2a83bafa78638d2a120953e7b32a0a22a7abbbffe4b57bcf6371ac023448de84",
+      "unchanged": true
+    },
+    {
+      "original_path": "pcsa/retraining_v3/history_sequential.py",
+      "current_path": "training/history_sequential.py",
+      "original_sha256": "0069e9ea802b9b9798812e4941bfd11393c09d0784c50d20017400f50343c67e",
+      "current_sha256": "c4d9d5cc17b13080c7c6bef3e4c203216f0bfd19bd06f28d62c682ebea97eae9",
+      "unchanged": false
+    },
+    {
+      "original_path": "pcsa/retraining_v3/protocol.json",
+      "current_path": "training/protocol.json",
+      "original_sha256": "bfbc109f77eb3274f0ec895a6003874a206e1177236baf1514bec94a8b703813",
+      "current_sha256": "f7a8e4a82d579d2129450135737b38a42d63c737c63f787a3f7845abd6c0ff16",
+      "unchanged": false
+    },
+    {
+      "original_path": "pcsa/retraining_v3/run.py",
+      "current_path": "training/run.py",
+      "original_sha256": "a87d6dfa4471ecffff4223f4774086d3328584bff0a6d850c92a0d009360acf4",
+      "current_sha256": "988cb926d629f3f44d732c800974f9aba11c8a315632ff37f43acaf1904405dd",
+      "unchanged": false
+    },
+    {
+      "original_path": "pcsa/retraining_v3/run_gpu.sh",
+      "current_path": "training/run_gpu.sh",
+      "original_sha256": "b85457260d681c29a5984cadeccc5f12e4cbd9dcd20caf8b9cb9c993ef775c2e",
+      "current_sha256": "465d83bbf2f837aa0ae65bdd1ceadf768dbebb2f8d55ba62977a3340a1b18db0",
+      "unchanged": false
+    },
+    {
+      "original_path": "pcsa/retraining_v3/run_ofat_gpu.sh",
+      "current_path": "training/run_ofat_gpu.sh",
+      "original_sha256": "57eb46afeedeb8e7ce3a09f844a69b49f55a0f10b848784b13a891f0526a5022",
+      "current_sha256": "a8046aeb37baa9e52c7deeda640a113649c8c3e8f6b44dba87e03b48c44d7831",
+      "unchanged": false
+    },
+    {
+      "original_path": "pcsa/scripts/prepare_austin_sep_four_homes.py",
+      "current_path": "scripts/prepare_austin_sep_four_homes.py",
+      "original_sha256": "b5f410f9c0cb4e1df79d5443bea636cb84e995699cb64bbd235e581fdff2abe4",
+      "current_sha256": "e051168e5091fa22f0762358d5ed027b045803802fc01304db4e4fb6f136c075",
+      "unchanged": false
+    },
+    {
+      "original_path": "pcsa/scripts/run_baseline_cross_home_transfer.py",
+      "current_path": "scripts/run_baseline_cross_home_transfer.py",
+      "original_sha256": "d1bfeb40639aee4047bf4a71c57186bad888ae4a5dd47a0afaa5d678206bfac4",
+      "current_sha256": "d1bfeb40639aee4047bf4a71c57186bad888ae4a5dd47a0afaa5d678206bfac4",
+      "unchanged": true
+    },
+    {
+      "original_path": "pcsa/scripts/run_pisa_cross_home_transfer.py",
+      "current_path": "scripts/run_pisa_cross_home_transfer.py",
+      "original_sha256": "a706df6461b5d83d5f54b24fd147947220ac832016bb96d1518ced4ab7938424",
+      "current_sha256": "a706df6461b5d83d5f54b24fd147947220ac832016bb96d1518ced4ab7938424",
+      "unchanged": true
+    },
+    {
+      "original_path": "pcsa/scripts/train_home7951.py",
+      "current_path": "scripts/train_home7951.py",
+      "original_sha256": "f813484700405efee9a84fc7be44742e36abca2dd47a6e70b1528c1dcbea6e83",
+      "current_sha256": "f813484700405efee9a84fc7be44742e36abca2dd47a6e70b1528c1dcbea6e83",
+      "unchanged": true
+    },
+    {
+      "original_path": "pcsa/scripts/train_pcsa_component_ablation.py",
+      "current_path": "scripts/train_pcsa_component_ablation.py",
+      "original_sha256": "e376d347299038b984d0a48a53fc04e4efb07e82ced844dd31c270603b5a74a2",
+      "current_sha256": "a40e7c894e3c5094de4614a70560b651c6d0f9507fbc62b764d0158a1bd2fea0",
+      "unchanged": false
+    },
+    {
+      "original_path": "pcsa/src/checkpoint_selection.py",
+      "current_path": "src/checkpoint_selection.py",
+      "original_sha256": "63b309be21e65b13e3d28b29ae2eba2c8a73372131ff22702338923ad4d2adfb",
+      "current_sha256": "63b309be21e65b13e3d28b29ae2eba2c8a73372131ff22702338923ad4d2adfb",
+      "unchanged": true
+    },
+    {
+      "original_path": "pcsa/src/data/__init__.py",
+      "current_path": "src/data/__init__.py",
+      "original_sha256": "9fbfbd590dee936df43117b86b97b6efad9862a53d1922b3f859f991174c0662",
+      "current_sha256": "9fbfbd590dee936df43117b86b97b6efad9862a53d1922b3f859f991174c0662",
+      "unchanged": true
+    },
+    {
+      "original_path": "pcsa/src/data/pecanstreet_dataset.py",
+      "current_path": "src/data/pecanstreet_dataset.py",
+      "original_sha256": "cdcffb981419925b328fda04babac46e9b21f8f64a26f54fd302fd307e72bb7e",
+      "current_sha256": "cdcffb981419925b328fda04babac46e9b21f8f64a26f54fd302fd307e72bb7e",
+      "unchanged": true
+    },
+    {
+      "original_path": "pcsa/src/data/scaler.py",
+      "current_path": "src/data/scaler.py",
+      "original_sha256": "a3297b3820cf87c669e065b3ef92b25508dce31a0b4273676042ead0d38be816",
+      "current_sha256": "a3297b3820cf87c669e065b3ef92b25508dce31a0b4273676042ead0d38be816",
+      "unchanged": true
+    },
+    {
+      "original_path": "pcsa/src/data/state_event.py",
+      "current_path": "src/data/state_event.py",
+      "original_sha256": "4e5a3220ac18be0e15ca488fa16aa4e28e46577d17ac2f6767fc28cc2f36551a",
+      "current_sha256": "4e5a3220ac18be0e15ca488fa16aa4e28e46577d17ac2f6767fc28cc2f36551a",
+      "unchanged": true
+    },
+    {
+      "original_path": "pcsa/src/evaluation/fair_baselines.py",
+      "current_path": "src/evaluation/fair_baselines.py",
+      "original_sha256": "fc57a7eff4624aecc39897318f7c345648ab1f7c82eaaa673dcfa4f8ec3158fc",
+      "current_sha256": "fc57a7eff4624aecc39897318f7c345648ab1f7c82eaaa673dcfa4f8ec3158fc",
+      "unchanged": true
+    },
+    {
+      "original_path": "pcsa/src/evaluation/metrics.py",
+      "current_path": "src/evaluation/metrics.py",
+      "original_sha256": "18e6182f68d32310db70fe03280a868b386e06d90804fd4b184d08d7f148a58a",
+      "current_sha256": "18e6182f68d32310db70fe03280a868b386e06d90804fd4b184d08d7f148a58a",
+      "unchanged": true
+    },
+    {
+      "original_path": "pcsa/src/evaluation/output_calibration.py",
+      "current_path": "src/evaluation/output_calibration.py",
+      "original_sha256": "3f90c98f60ff0de4f20f4a64ed55b9e1ead2813e18882e7d1dd1913dc4c8a626",
+      "current_sha256": "3f90c98f60ff0de4f20f4a64ed55b9e1ead2813e18882e7d1dd1913dc4c8a626",
+      "unchanged": true
+    },
+    {
+      "original_path": "pcsa/src/models/__init__.py",
+      "current_path": "src/models/__init__.py",
+      "original_sha256": "ebf5eaae23721732085a9e5e4e84a06cfe343dacaed8dd3cecab2fd23cc98183",
+      "current_sha256": "ebf5eaae23721732085a9e5e4e84a06cfe343dacaed8dd3cecab2fd23cc98183",
+      "unchanged": true
+    },
+    {
+      "original_path": "pcsa/src/models/baselines.py",
+      "current_path": "src/models/baselines.py",
+      "original_sha256": "35a8c28772ed882d2057ae3308580623d491b6e112bfcf516fef5b96240799fe",
+      "current_sha256": "35a8c28772ed882d2057ae3308580623d491b6e112bfcf516fef5b96240799fe",
+      "unchanged": true
+    },
+    {
+      "original_path": "pcsa/src/models/blocks.py",
+      "current_path": "src/models/blocks.py",
+      "original_sha256": "35a8df51dd3301c4e1b0c8fcf99f4f3bab057f6632d2fae3e0dae14516dd0ac6",
+      "current_sha256": "35a8df51dd3301c4e1b0c8fcf99f4f3bab057f6632d2fae3e0dae14516dd0ac6",
+      "unchanged": true
+    },
+    {
+      "original_path": "pcsa/src/models/pisa.py",
+      "current_path": "src/models/pisa.py",
+      "original_sha256": "e70daaaa5f685cab496cacd35d9efe850791c6d0abc3586ba9a8fff2ff681e16",
+      "current_sha256": "e70daaaa5f685cab496cacd35d9efe850791c6d0abc3586ba9a8fff2ff681e16",
+      "unchanged": true
+    },
+    {
+      "original_path": "pcsa/src/models/power_output.py",
+      "current_path": "src/models/power_output.py",
+      "original_sha256": "08435763baad3920011372a8dc3d818994272dfdb591508caf4a63d5a7523a66",
+      "current_sha256": "08435763baad3920011372a8dc3d818994272dfdb591508caf4a63d5a7523a66",
+      "unchanged": true
+    },
+    {
+      "original_path": "pcsa/src/models/state_informed_forecaster.py",
+      "current_path": "src/models/state_informed_forecaster.py",
+      "original_sha256": "0bc3c6031abed017f0ecd7074bcd4cdd351e2abe15d0e8cfe52e987c11b35c1b",
+      "current_sha256": "0bc3c6031abed017f0ecd7074bcd4cdd351e2abe15d0e8cfe52e987c11b35c1b",
+      "unchanged": true
+    },
+    {
+      "original_path": "pcsa/src/training/__init__.py",
+      "current_path": "src/training/__init__.py",
+      "original_sha256": "1921929a754ff4ace4786829f428783216eb8ab43259915f1c451396ea96a639",
+      "current_sha256": "1921929a754ff4ace4786829f428783216eb8ab43259915f1c451396ea96a639",
+      "unchanged": true
+    },
+    {
+      "original_path": "pcsa/src/training/aggregate_forecasting.py",
+      "current_path": "src/training/aggregate_forecasting.py",
+      "original_sha256": "69fb819cae923844d37de0dcd81b45eb67e6c9c558f3e227a5bdbf8aa9e66185",
+      "current_sha256": "69fb819cae923844d37de0dcd81b45eb67e6c9c558f3e227a5bdbf8aa9e66185",
+      "unchanged": true
+    },
+    {
+      "original_path": "pcsa/src/training/losses.py",
+      "current_path": "src/training/losses.py",
+      "original_sha256": "5f290ed2fbd6b2ad0c1c73489a2eb9397ae841f3a2e22300232be4ad3d14a2fc",
+      "current_sha256": "5f290ed2fbd6b2ad0c1c73489a2eb9397ae841f3a2e22300232be4ad3d14a2fc",
+      "unchanged": true
+    },
+    {
+      "original_path": "pcsa/src/training/trainer.py",
+      "current_path": "src/training/trainer.py",
+      "original_sha256": "1f10a76cc99aeb908660c73f55c4c9f749e3c77b7b900abf37c2ff53d3d7adb3",
+      "current_sha256": "1f10a76cc99aeb908660c73f55c4c9f749e3c77b7b900abf37c2ff53d3d7adb3",
+      "unchanged": true
+    }
+  ]
+}

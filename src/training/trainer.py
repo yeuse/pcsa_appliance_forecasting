@@ -1,6 +1,9 @@
+# src/training/trainer.py
+
 from __future__ import annotations
 
 import json
+import hashlib
 import math
 import random
 import time
@@ -107,6 +110,8 @@ class TrainerConfig:
     """
 
     max_epochs: int = 100
+    train_steps_per_epoch: int | None = None
+    include_initial_candidate: bool = False
 
     device: str | None = None
     seed: int = 42
@@ -505,6 +510,11 @@ class PISATrainer:
         supervision_counts = None
         supervision_batches = 0
 
+        budget = self.cfg.train_steps_per_epoch
+        if budget is not None and (budget < 1 or budget > len(train_loader)):
+            raise ValueError("train_steps_per_epoch must be between 1 and len(train_loader)")
+        completed_steps = 0
+
         for step, batch in enumerate(train_loader, start=1):
             batch = move_batch_to_device(batch, self.device)
             batch_size = get_batch_size(batch)
@@ -568,6 +578,8 @@ class PISATrainer:
 
                 self.optimizer.step()
 
+            completed_steps += 1
+
             meter.update(loss_dict, n=batch_size)
 
             if self.cfg.log_interval > 0 and step % self.cfg.log_interval == 0:
@@ -580,7 +592,11 @@ class PISATrainer:
                 )
                 print(msg)
 
+            if budget is not None and completed_steps >= budget:
+                break
+
         stats = meter.averages()
+        stats["optimizer_step_attempts"] = float(completed_steps)
         stats["epoch_time_sec"] = time.time() - start_time
         if supervision_counts is not None:
             for index in range(supervision_counts.shape[1]):
@@ -1032,6 +1048,48 @@ class PISATrainer:
                 f"monitor '{self.cfg.monitor}' is not a loss metric."
             )
 
+        if start_epoch == 1 and self.cfg.include_initial_candidate:
+            # Evaluation must not perturb the training RNG stream.
+            py_rng, np_rng = random.getstate(), np.random.get_state()
+            try:
+                with torch.random.fork_rng():
+                    initial_stats = self.validate(val_loader, compute_metrics=True)
+            finally:
+                random.setstate(py_rng)
+                np.random.set_state(np_rng)
+            record = {"epoch": 0.0, **{f"val/{k}": v for k, v in initial_stats.items()}}
+            value = record[self.cfg.monitor]
+            eligible, _, _ = on_safety_status(record, self.cfg.source_on_safety_ceiling,
+                                               self.cfg.source_on_safety_scope)
+            if eligible and math.isfinite(value):
+                self.best_metric, self.best_epoch = value, 0
+            record["checkpoint/initial_candidate_eligible"] = float(eligible and math.isfinite(value))
+            self.history.append(record)
+            initial_path = self.checkpoint_dir / "initial.pt"
+            if initial_path.exists():
+                raise FileExistsError(initial_path)
+            self.save_checkpoint(initial_path, epoch=0, is_best=False, checkpoint_role="initial")
+            saved = torch.load(initial_path, map_location="cpu")["model_state_dict"]
+            digest = hashlib.sha256()
+            audit = {"roundtrip_exact": True, "special_parameters": {}}
+            for name, tensor in self.model.state_dict().items():
+                tensor = tensor.detach().cpu()
+                if not torch.equal(tensor, saved[name]):
+                    raise RuntimeError(f"Initial checkpoint roundtrip mismatch: {name}")
+                digest.update(name.encode())
+                digest.update(str((tensor.dtype, tuple(tensor.shape))).encode())
+                digest.update(tensor.contiguous().numpy().tobytes())
+                if name.startswith("refined_history_residual_tcn.") and ("gate_logit" in name or "residual_heads." in name):
+                    audit["special_parameters"][name] = {"shape": list(tensor.shape),
+                        "max_abs": float(tensor.abs().max()),
+                        "values": tensor.tolist() if "gate_logit" in name else None}
+            audit["model_state_sha256"] = digest.hexdigest()
+            (self.checkpoint_dir / "initial_audit.json").write_text(json.dumps(audit, indent=2), encoding="utf-8")
+            if math.isfinite(self.best_metric) and self.cfg.save_best:
+                self.save_checkpoint(self.checkpoint_dir / "best.pt", epoch=0, is_best=True,
+                                     checkpoint_role="initial_best")
+            self.save_history()
+
         for epoch in range(start_epoch, self.cfg.max_epochs + 1):
             compute_metrics = monitor_requires_metrics or (
                 self.cfg.eval_metrics_every > 0
@@ -1095,7 +1153,7 @@ class PISATrainer:
                 # Before the first safety-eligible epoch, do not early-stop a
                 # run merely because no checkpoint is yet admissible. Once a
                 # safe best exists, unsafe epochs count as non-improvements.
-                if source_on_safety_eligible or self.best_epoch > 0:
+                if source_on_safety_eligible or math.isfinite(self.best_metric):
                     self.num_bad_epochs += 1
                 else:
                     self.num_bad_epochs = 0
@@ -1286,9 +1344,9 @@ class PISATrainer:
                 break
 
         selection_status = {
-            "status": "selected" if self.best_epoch > 0 else "no_eligible_checkpoint",
+            "status": "selected" if math.isfinite(self.best_metric) else "no_eligible_checkpoint",
             "best_epoch": self.best_epoch,
-            "best_metric": self.best_metric if self.best_epoch > 0 else None,
+            "best_metric": self.best_metric if math.isfinite(self.best_metric) else None,
             "monitor": self.cfg.monitor,
             "safety_scope": self.cfg.source_on_safety_scope,
             "safety_ceiling": self.cfg.source_on_safety_ceiling,
@@ -1296,7 +1354,7 @@ class PISATrainer:
         (self.checkpoint_dir / "selection_status.json").write_text(
             json.dumps(selection_status, indent=2, allow_nan=False), encoding="utf-8"
         )
-        if self.best_epoch == 0:
+        if not math.isfinite(self.best_metric):
             raise RuntimeError(
                 "No eligible checkpoint was selected. See selection_status.json "
                 "and history.json; last.pt is diagnostic only, not an accepted model."
