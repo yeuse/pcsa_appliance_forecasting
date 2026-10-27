@@ -1,10 +1,10 @@
-# R3 frozen implementation and result records
+# PCSA implementation and result records
 
-Run commands from this `r3/` directory. The 39 files extracted from the formal evaluation source snapshot are byte-for-byte verified against `records/formal_manifest.json`. Historical README files inside `retraining_v3/` describe intermediate experiments; the sequence below identifies the final evaluated model.
+Run commands from this `pcsa/` directory. The 39 files extracted from the formal evaluation source snapshot are byte-for-byte verified against `records/formal_manifest.json`. Historical README files inside `retraining_v3/` describe intermediate experiments; the sequence below identifies the final evaluated model.
 
 ## Final method and evidence
 
-Home 7951 is the source, with targets 3039, 8386 and 8565; seeds are 7, 42 and 123. PCSA has two conceptual stages: historical reconstruction pretraining, followed by forecasting with sequential base then residual optimization (maximum 160 + 80 + 80 epochs). Each seed uses its own historical checkpoint. The old shared seed-42 initialization is not used in these R3 results.
+Home 7951 is the source, with targets 3039, 8386 and 8565; seeds are 7, 42 and 123. PCSA has two conceptual stages: historical reconstruction pretraining, followed by forecasting with sequential base then residual optimization (maximum 160 + 80 + 80 epochs). Each seed uses its own historical checkpoint. The old shared seed-42 initialization is not used in these results.
 
 - Source and target tests: `records/formal_results_summary.csv` and `formal_results_by_seed.csv`.
 - Per-appliance ON/OFF errors, OFF predicted power, cap-only controls, cap saturation, target label budgets, parameter/frozen-buffer checks and compute: `records/formal_evaluation_records.zip`.
@@ -23,7 +23,7 @@ Prepare the four CSV files at `data/austin_2018_sep_4homes/home_{home}_2018_sep_
 
 ```bash
 # From repository root
-cd r3
+cd pcsa
 # Physical GPU 0 is exposed as logical cuda:0
 export CUDA_VISIBLE_DEVICES=0
 python -m retraining_v3.run --phase audit --output outputs/retrain_v3_full --device cpu

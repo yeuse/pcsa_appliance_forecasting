@@ -14,9 +14,9 @@ archive/
 *.log
 .DS_Store
 
-# R3 metadata-only archives
-!r3/records/*.zip
+# Experiment metadata-only archives
+!pcsa/records/*.zip
 
 # Data-loader source is code, not household data.
-!r3/src/data/
-!r3/src/data/*.py
+!pcsa/src/data/
+!pcsa/src/data/*.py

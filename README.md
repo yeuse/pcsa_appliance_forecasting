@@ -4,7 +4,7 @@ Research implementation for **PCSA: Constraint aware residential appliance power
 
 PCSA predicts the next **30 minutes** of appliance power from **120 minutes** of net-grid history and calendar features. It combines historical appliance reconstruction, appliance-conditioned forecasting and separate causal TCN residual corrections. Appliance measurements supervise training and adaptation; deployment uses net-grid and calendar inputs.
 
-[Architecture](#architecture) · [Results](#results) · [Training and evaluation](docs/PCSA_GUIDE.md) · [Experiment records](r3/records)
+[Architecture](#architecture) · [Results](#results) · [Training and evaluation](docs/PCSA_GUIDE.md) · [Experiment records](pcsa/records)
 
 ## Architecture
 
@@ -80,8 +80,8 @@ See the **[PCSA implementation guide](docs/PCSA_GUIDE.md)** for the code layout,
 
 ## Scope and reproducibility
 
-The published source is verified against the formal experiment's SHA256 manifest. Complete metrics, target-label budgets, training costs, checkpoint provenance and component diagnostics are provided in the [experiment records](r3/records).
+The published source is verified against the formal experiment's SHA256 manifest. Complete metrics, target-label budgets, training costs, checkpoint provenance and component diagnostics are provided in the [experiment records](pcsa/records).
 
 Source caps were chosen after inspection of the source month, including eventual test dates, and earlier test outputs were inspected during development. Net-grid filtering affects retained coverage. Results are a retrospective fixed-protocol comparison; event recognition and operational HEMS benefits are not established.
 
-The versioned `r3/` directory identifies the frozen implementation supporting the current results; **PCSA is the project and method name**. Root-level legacy code and [earlier documentation](README_R2_ARCHIVE.md) remain available for historical comparison. The manuscript cites commit `213f6a57a363d07303eb8c4dcbaac3468517a155`; subsequent homepage presentation updates do not change those frozen experimental files.
+The `pcsa/` directory contains the implementation supporting the current results. Root-level legacy code and [earlier documentation](README_R2_ARCHIVE.md) remain available for historical comparison. The manuscript cites commit `213f6a57a363d07303eb8c4dcbaac3468517a155`; that fixed historical link remains valid after the public directory rename. The experiment source files are unchanged.
